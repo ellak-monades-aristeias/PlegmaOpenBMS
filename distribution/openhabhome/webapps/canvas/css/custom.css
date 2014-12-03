@@ -1,0 +1,176 @@
+.datepicker {
+    z-index: 9999999!important;
+}
+
+.cleanbody {
+    background: none;
+}
+
+.print-date {
+    display: none;
+}
+@media print {
+    .print-date {display: block;}
+}
+
+.dashboard-stat-dummy {
+    position: relative;
+    display: block;
+    padding: 30px 20px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    overflow: hidden;
+}
+
+.ngPartialSlideReveal.ng-enter {
+    -webkit-transition: 0.5s linear all;
+    -moz-transition: 0.5s linear all;
+    -o-transition: 0.5s linear all;
+    transition: 0.5s linear all;
+    opacity: 0.5;
+    position: relative;
+    opacity: 0;
+    top: 10px;
+}
+
+.ngPartialSlideReveal.ng-enter-active {
+    top: 0;
+    opacity: 1;
+}
+
+.chart-holder{
+    height: 450px;
+}
+
+/*---------------------------- POWER BUTTON & SLIDER -------------------------------*/
+.power-btn{
+    position 	: relative;
+    float 		: left;
+    width: 56px;
+    height: 56px;
+    margin: 3px 8px;
+    background: rgb(173,173,173); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(173,173,173,1) 0%, rgba(255,255,255,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(173,173,173,1)), color-stop(100%,rgba(255,255,255,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(173,173,173,1) 0%,rgba(255,255,255,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(173,173,173,1) 0%,rgba(255,255,255,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(173,173,173,1) 0%,rgba(255,255,255,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(173,173,173,1) 0%,rgba(255,255,255,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#adadad', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+
+
+    box-shadow: -1px -1px 10px -2px rgba(0,0,0,0.5);
+    border-radius: 30px;
+    cursor:pointer;
+}
+
+.power-btn:after {
+    position: absolute;
+    width 	: 46px;
+    height 	: 46px;
+    background: #FF0321 -webkit-radial-gradient(50% 20%, 30px 29px,
+    rgba(255, 255, 255, 1) 0%,
+    #FFF 14%,
+    rgba(255, 255, 255, 0.58) 50%,
+    rgba(153, 153, 153, 0.51) 64%,
+    rgba(196, 196, 196, 0.51) 100%);
+    border-radius: 30px;
+
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.33), inset 0px 1px 5px #000;
+
+    content: "";
+    top: 5px;
+    left: 5px;
+    z-index: 1;
+}
+.on:after{
+    background-color:green;
+}
+.off:after{
+    background-color:red;
+}
+.disable:after{
+    background-color:gray;
+}
+
+.slider-container{
+    height: 16px;
+    width: 96%;
+    display: inline-block;
+    padding: 10px 2%;
+}
+
+/*-------------------------------index.html----------------------------*/
+ul.half-container{
+    width:49%;
+    float:left;
+    list-style: none;
+    margin: 0;
+    padding: 0.3%;
+}
+ul.half-container li{
+    width: 96%;
+    height: 128px;
+    list-style: none;
+    background-color: #E6E6E6;
+    border: 1px solid #CCC;
+    margin: 1%;
+    padding: 1%;
+}
+ul.half-container .header{
+    height: 30px;
+    width: 115px;
+    line-height: 30px;
+    float: left;
+    font-size: 20px;
+}
+ul.half-container .power-value{
+    float:left;
+    height: 56px;
+    line-height: 56px;
+    font-size: 18px;
+}
+
+
+/*----------------------------- b.html ------------------------------*/
+
+
+ul.middle-container{
+    width: 26%;
+    float:left;
+    list-style: none;
+    margin: 0;
+    padding: 0.3%;
+}
+ul.middle-container:nth-child(1) {
+    margin-left: 23%;
+}
+ul.middle-container:nth-child(2) {
+    margin-right: 23%;
+}
+ul.middle-container li{
+    width: 96%;
+    height: 62px;
+    list-style: none;
+    background-color: #E6E6E6;
+    border: 1px solid #CCC;
+    margin: 1%;
+}
+ul.middle-container .header{
+    text-align: center;
+
+    height: 62px;
+    width: 210px;
+    line-height: 62px;
+    float: left;
+    font-size: 20px;
+}
+ul.middle-container:nth-child(1) .header{
+    float: right;
+}
+
+ul.middle-container:nth-child(1) .power-btn{
+    float: right;
+}

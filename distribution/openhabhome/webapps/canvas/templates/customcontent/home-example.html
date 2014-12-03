@@ -1,0 +1,33 @@
+<div id="content">
+
+    <div id="content-header">
+        <h1>{{title}}</h1>
+    </div> <!-- #content-header -->
+
+
+    <div id="content-container">
+
+<!--
+        Check the difference in this case in the arguments of plegma-single-value.
+        You should NOT have widget attribute, but only the itemid
+        below is the syntax for a row.
+        the values of col-mid-* and col-sm-* you have in the divs should sum up to 12
+        in the case below we want to have 3 items in one row, so 12/3=4, therefore col-md-4 and col-sm-4
+        feel free to add rows and experiment with number of items of row
+-->
+
+        <div class="row">
+            <div class="col-md-4 col-sm-4">
+                <plegma-simple-value itemid="Espace_141_Total_Energy"></plegma-simple-value>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <plegma-single-value itemid="Espace_141_SolarTemp1"></plegma-single-value>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <plegma-single-value itemid="Espace_141_AmbientTemp1"></plegma-single-value>
+            </div>
+        </div>
+
+    </div> <!-- /#content-container -->
+    <!-- <plegma-webview title="Power" url="http://pleg.no-ip.org:81/pleg/power.html"></plegma-webview> -->
+</div>

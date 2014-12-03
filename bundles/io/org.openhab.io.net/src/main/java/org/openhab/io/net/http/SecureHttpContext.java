@@ -99,6 +99,29 @@ public class SecureHttpContext implements HttpContext, ManagedService {
 
 		boolean authenticationResult = false;
 		
+		if(request.getParameter("auth")!=null)
+		{
+			String authInfoString = new String(Base64.decodeBase64(request.getParameter("auth")));
+			String[] authInfos = authInfoString.split(":");
+			if (authInfos.length < 2) {
+				logger.warn("authInfos '{}' must contain two elements separated by a colon", authInfoString);
+				return false;
+			}		
+			
+			String username = authInfos[0];
+			String password = authInfos[1];
+			
+			Subject subject = authenticate(realm, username, password);
+			if (subject != null) {
+				request.setAttribute(
+						HttpContext.AUTHENTICATION_TYPE,
+						HttpServletRequest.BASIC_AUTH);
+				request.setAttribute(HttpContext.REMOTE_USER, username);
+				logger.trace("authentication of user '{}' succeeded!", username);
+				return true;
+			}			
+		}
+		
 		try {
 			String authHeader = request.getHeader(HTTP_HEADER__AUTHORIZATION);
 			if (StringUtils.isBlank(authHeader)) {
@@ -184,8 +207,8 @@ public class SecureHttpContext implements HttpContext, ManagedService {
 	 * @throws IOException if an error occurred while sending <code>response</code> 
 	 */
 	private void sendAuthenticationHeader(HttpServletResponse response, final String realm) throws IOException {
-		response.setHeader(HTTP_HEADER__AUTHENTICATE,
-			HttpServletRequest.BASIC_AUTH + " realm=\"" + realm + "\"");
+//		response.setHeader(HTTP_HEADER__AUTHENTICATE,
+//			HttpServletRequest.BASIC_AUTH + " realm=\"" + realm + "\"");
 		response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 	}
 
@@ -233,7 +256,7 @@ public class SecureHttpContext implements HttpContext, ManagedService {
 			else {
 				logger.warn("we don't support '{}' authentication -> processing aborted", authType);
 			}
-		}
+		} 
 		else {
 			logger.warn("authentication header '{}' must contain of two parts separated by a blank", authHeader);
 		}

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="">
+    <meta name="author" content="" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,800italic,400,600,800" type="text/css">
+
+    <link rel="stylesheet" href="./css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" media="print" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./js/libs/css/ui-lightness/jquery-ui-1.9.2.custom.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" media="all" href="./css/daterangepicker-bs3.css" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+<!--    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/themes/base/jquery-ui.css" rel="stylesheet" />-->
+
+    <link rel="stylesheet" href="./js/plugins/icheck/skins/minimal/blue.css" type="text/css" />
+    <link rel="stylesheet" href="./js/plugins/select2/select2.css" type="text/css" />
+    <link rel="stylesheet" href="./js/plugins/fullcalendar/fullcalendar.css" type="text/css" />
+    <link rel="stylesheet" href="./js/plugins/datepicker/datepicker.css" type="text/css" />
+
+    <link rel="stylesheet" href="./css/App.css" type="text/css" />
+    <link rel="stylesheet" href="./css/Login.css" type="text/css" />
+    <link rel="stylesheet" href="./css/custom.css" type="text/css" />
+
+</head>
+
+<body ng-app="plegmaApp" ng-controller="rootController" class="cleanbody">
+
+<div id="wrapper" class="hidden" ui-view="fullscreen">
+
+    <header id="header">
+
+        <h1 id="site-logo">
+            <a href="index-dev.html">
+                <object data="./img/logos/Plegma_logo_white.svg" type="image/svg+xml"></object>
+            </a>
+        </h1>
+
+        <a href="javascript:;" data-toggle="collapse" data-target=".top-bar-collapse" id="top-bar-toggle" class="navbar-toggle collapsed">
+            <i class="fa fa-cog"></i>
+        </a>
+
+        <a href="javascript:;" data-toggle="collapse" data-target=".sidebar-collapse" id="sidebar-toggle" class="navbar-toggle collapsed">
+            <i class="fa fa-reorder"></i>
+        </a>
+
+    </header> <!-- header -->
+
+
+    <nav id="top-bar" class="collapse top-bar-collapse">
+
+        <ul class="nav navbar-nav pull-left">
+            <li class="">
+                <a href="javascript:;;">
+                    <i class="fa fa-home"></i>
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="javascript:;;">
+                    <i class="fa fa-clock-o"></i>
+                    {{date}}
+                </a>
+            </li>
+
+        </ul>
+        <ul class="nav navbar-nav pull-right">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+                    <i class="fa fa-user"></i>
+                    {{$state.current.data.user}}
+                    <span class="caret"></span>
+                </a>
+
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a href="javascript:;;">
+                            <i class="fa fa-user"></i>
+                            &nbsp;&nbsp;My Profile
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;;">
+                            <i class="fa fa-calendar"></i>
+                            &nbsp;&nbsp;My Calendar
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;;">
+                            <i class="fa fa-cogs"></i>
+                            &nbsp;&nbsp;Settings
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="javascript:;;">
+                            <i class="fa fa-sign-out"></i>
+                            &nbsp;&nbsp;Logout
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+    </nav> <!-- /#top-bar -->
+
+
+    <div id="sidebar-wrapper" class="collapse sidebar-collapse">
+
+        <div id="search">
+            <form>
+                <input class="form-control input-sm" type="text" name="search" placeholder="Search..." />
+
+                <button type="submit" id="search-btn" class="btn"><i class="fa fa-search"></i></button>
+            </form>
+        </div> <!-- #search -->
+
+        <div ui-view="navigation"></div>
+
+        <!--<plegma-nav></plegma-nav>-->
+
+    </div> <!-- /#sidebar-wrapper -->
+
+    <div ui-view="content"></div>
+
+    <!-- <plegma-dashboard-content></plegma-dashboard-content> -->
+    <!-- #content -->
+
+</div> <!-- #wrapper -->
+
+<footer class="hidden" id="footer">
+    <ul class="nav pull-right">
+        <li>
+            Copyright &copy; 2013, Plegma Labs S.A.
+        </li>
+    </ul>
+</footer>
+
+<div id="login-container">
+
+    <div id="login">
+
+        <h2>Please wait.....</h2>
+        <br>
+
+        <img src="./img/ajax_loader_gray_128.gif">
+
+    </div> <!-- /#login -->
+
+</div> <!-- /#login-container -->
+
+<script src="./js/libs/jquery-1.9.1.min.js"></script>
+<script src="./js/libs/jquery-ui-1.9.2.custom.min.js"></script>
+<!--<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>-->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+
+<script src="./js/libs/bootstrap.min.js"></script>
+<script type="text/javascript" src="./js/libs/daterangepicker.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"></script>
+<script src="./js/libs/angular-ui-router.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.4.0/moment.min.js"></script>
+<script src="./js/libs/angular-base64.min.js"></script>
+<script src="./js/libs/jquery.cookie.js"></script>
+
+<script src="./js/libs/highstock.src.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="./js/libs/exporting.js"></script>
+
+<!-- Atmosphere related libraries -->
+<script src="http://spyboost.github.io/angular-atmosphere/service/angular-atmosphere-service.js"></script>
+<script src="./js/libs/jquery.atmosphere.js"></script>
+
+<script src="./js/plugins/icheck/jquery.icheck.min.js"></script>
+<script src="./js/plugins/select2/select2.js"></script>
+<script src="./js/plugins/tableCheckable/jquery.tableCheckable.js"></script>
+<script src="./js/plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+
+<script src="./js/App.js"></script>
+
+<script src="./js/libs/raphael-2.1.2.min.js"></script>
+<script src="./js/plugins/morris/morris.min.js"></script>
+
+<script src="./js/demos/charts/morris/area.js"></script>
+<script src="./js/demos/charts/morris/donut.js"></script>
+
+<script src="./js/plugins/sparkline/jquery.sparkline.min.js"></script>
+
+<script src="./js/plugins/fullcalendar/fullcalendar.min.js"></script>
+<script src="./js/demos/calendar.js"></script>
+
+<script src="./js/demos/dashboard.js"></script>
+
+<script>
+    var millis = ((new Date()).getTime());
+
+    document.write('<script src="./js/utils.js?'+millis+'"><\/script>');
+    document.write('<script src="./js/routeNavBuilder.js?'+millis+'"><\/script>');
+    document.write('<script src="./js/mainContentDisplayer.js?'+millis+'"><\/script>');
+    document.write('<script src="./js/mainContent/directives/highcharts.js?'+millis+'"><\/script>');
+    document.write('<script src="./js/mainContent/directives/piecharts.js?'+millis+'"><\/script>');
+    document.write('<script src="./js/mainContent/directives/singleValue.js?'+millis+'"><\/script>');
+    document.write('<script src="./js/mainContent/directives/simpleValue.js?'+millis+'"><\/script>');
+    document.write('<script src="./js/mainContent/directives/gauge.js?'+millis+'"><\/script>');
+    document.write('<script src="./js/mainContent/directives/map.js?'+millis+'"><\/script>');
+    document.write('<script src="./js/loginModule.js?'+millis+'"><\/script>');
+    document.write('<script src="./js/angularApp.js?'+millis+'"><\/script>');
+</script>
+<script src="//localhost:35729/livereload.js"></script>
+
+</body>
+</html>

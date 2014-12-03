@@ -1,0 +1,13 @@
+<a href="javascript:;" ng-class="{'dashboard-stat-dummy' : widget.dummy, 'dashboard-stat' : !widget.dummy}" style="background-color : {{widget.valuecolor}}">
+    <div class="visual">
+        <i class="fa"></i>
+    </div> <!-- /.visual -->
+
+    <div class="details">
+        <span class="content">{{label}}</span>
+        <span class="value">{{value}} {{unit}}</span>
+    </div> <!-- /.details -->
+
+    <i ng-hide="widget.dummy" class="fa fa-play-circle more"></i>
+
+</a>

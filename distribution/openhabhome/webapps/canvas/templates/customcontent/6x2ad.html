@@ -1,0 +1,135 @@
+<script>
+
+    $(function() {
+        $( '.power-btn' ).on( 'click', function(){
+            // console.log('power-btn clicked: ', $(this) );
+            var $slider = $( this ).siblings( '.slider-container' ).find( '.slider' ) ;
+            var $result = $( this ).siblings( '.power-value' ).find( 'span' ) ;
+            if (  $( this ).hasClass( 'disable' ) ) {
+                $( this ).removeClass( 'disable' ).addClass( 'on' ) ;
+                $slider.slider( "option", "value", 190 ) ;
+                $slider.slider( "enable" ) ;
+                $result.text( 190 ) ;
+            }
+            else if (  $( this ).hasClass( 'on' ) ) {
+                $( this ).removeClass( 'on' ).addClass( 'off' ) ;
+                $slider.slider( "option", "value", 0 );
+                $result.text( 0 ) ;
+            }
+            else if (  $( this ).hasClass( 'off' ) ) {
+                $( this ).removeClass( 'off' ).addClass( 'disable' ) ;
+                $slider.slider( "option", "value", 0 );
+                $slider.slider( "disable" );
+                $result.text( 0 ) ;
+            }
+
+        } );
+
+        $( '.slider' ).slider( {
+            orientation: "horizontal",
+            range: "max",
+            min: 0, // min value
+            max: 190, // max value
+            step: 0.1,
+            value: 0, // default value of slider
+            slide: function(event, ui) {
+                // onSlide, show current value
+                var $result     = $( this ).parent( '.slider-container' ).siblings( '.power-value' ).find( 'span' ) ;
+                var $power_btn  = $( this ).parent( '.slider-container' ).siblings( '.power-btn' ) ;
+
+                $result.text( ui.value ) ;
+                if ( ui.value == 0 ){
+                    $power_btn.removeClass( 'on disable' ).addClass( 'off' ) ;
+                }
+                else {
+                    $power_btn.removeClass( 'off disable' ).addClass( 'on' ) ;
+
+                }
+
+            }
+        } );
+
+        $( '.slider' ).each( function( index ){
+            //console.log( index, this );
+            var $power_btn = $( this ).parent( '.slider-container' ).siblings( '.power-btn' ) ;
+            if (  $power_btn.hasClass( 'on' ) ) {
+                $( this ).slider( "option", "value", 190 );
+            }
+            else {
+                $( this ).slider( "option", "value", 0 );
+                if (  $power_btn.hasClass( 'disable' ) ) {
+                    $( this ).slider( "disable" );
+                }
+            }
+
+        } ) ;
+
+    });
+
+</script>
+
+<div id="content">
+
+    <div id="content-header">
+        <h1>{{title}}</h1> <h1 class="print-date">{{date}}</h1>
+    </div> <!-- #content-header -->
+    <!--
+
+        chart : 1,
+        morris : 1,
+        webview : 1,
+        text : 3,
+        image : 1,
+        rrd4j : 1
+
+    -->
+    <div id="content-container" ng-controller="rowController">
+        <ul class="half-container">
+            <li>
+                <span class="header">Text:</span>
+                <div class="slider-container">
+                    <div class="slider"></div>
+                </div>
+                <div class="power-btn off"> </div><div class="power-value">Power usage: <span>0</span> W</div>
+            </li>
+            <li>
+                <span class="header">Outdoor:</span>
+                <div class="slider-container">
+                    <div class="slider"></div>
+                </div>
+                <div class="power-btn on"> </div><div class="power-value">Power usage: <span>190.0</span> W</div>
+            </li>
+            <li>
+                <span class="header">Chandelier:</span>
+                <div class="slider-container">
+                    <div class="slider"></div>
+                </div>
+                <div class="power-btn disable"> </div><div class="power-value">Power usage: <span>0</span> W</div>
+            </li>
+        </ul>
+        <ul class="half-container">
+            <li>
+                <span class="header">Wall lamp:</span>
+                <div class="slider-container">
+                    <div class="slider"></div>
+                </div>
+                <div class="power-btn disable"> </div><div class="power-value">Power usage: <span>0</span> W</div>
+            </li>
+            <li>
+                <span class="header">Floor lamp:</span>
+                <div class="slider-container">
+                    <div class="slider"></div>
+                </div>
+                <div class="power-btn off"> </div><div class="power-value">Power usage: <span>0</span> W</div>
+            </li>
+            <li>
+                <span class="header">Staircase:</span>
+                <div class="slider-container">
+                    <div class="slider"></div>
+                </div>
+                <div class="power-btn on"> </div><div class="power-value">Power usage: <span>190.0</span> W</div>
+            </li>
+
+        </ul>
+    </div>
+</div>

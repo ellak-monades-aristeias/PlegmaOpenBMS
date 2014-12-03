@@ -1,0 +1,115 @@
+<script>
+
+    $(function() {
+        $( '.power-btn' ).on( 'click', function(){
+            // console.log('power-btn clicked: ', $(this) );
+            if (  $( this ).hasClass( 'disable' ) ) {
+                $( this ).removeClass( 'disable' ).addClass( 'on' ) ;
+            }
+            else if (  $( this ).hasClass( 'on' ) ) {
+                $( this ).removeClass( 'on' ).addClass( 'off' ) ;
+            }
+            else if (  $( this ).hasClass( 'off' ) ) {
+                $( this ).removeClass( 'off' ).addClass( 'disable' ) ;
+            }
+
+        } );
+
+    });
+
+</script>
+
+<div id="content">
+
+    <div id="content-header">
+        <h1>{{title}}</h1> <h1 class="print-date">{{date}}</h1>
+    </div> <!-- #content-header -->
+    <!--
+
+        chart : 1,
+        morris : 1,
+        webview : 1,
+        text : 3,
+        image : 1,
+        rrd4j : 1
+
+    -->
+    <div id="content-container" ng-controller="rowController">
+        <ul class="middle-container">
+            <li>
+                <span class="header" style="text-align: right;">Outputs</span>
+            </li>
+            <li>
+                <div class="power-btn off"> </div>
+                <span class="header">Heating</span>
+            </li>
+            <li>
+                <div class="power-btn off"> </div>
+                <span class="header">Garden Lights</span>
+            </li>
+            <li>
+                <div class="power-btn disable"> </div>
+                <span class="header">Outdoor lights</span>
+            </li>
+            <li>
+                <div class="power-btn off"> </div>
+                <span class="header">Garage Doors</span>
+            </li>
+            <li>
+                <div class="power-btn disable"> </div>
+                <span class="header">Christmas Lights</span>
+            </li>
+            <li>
+                <div class="power-btn disable"> </div>
+                <span class="header">Driveway Heating</span>
+            </li>
+            <li>
+                <div class="power-btn disable"> </div>
+                <span class="header">Hall lights</span>
+            </li>
+            <li>
+                <div class="power-btn off"> </div>
+                <span class="header">Water Pump</span>
+            </li>
+        </ul>
+
+        <ul class="middle-container">
+            <li>
+                <span class="header" style="text-align: left;">Inputs</span>
+            </li>
+            <li>
+                <div class="power-btn on"> </div>
+                <span class="header">Security System Status</span>
+            </li>
+            <li>
+                <div class="power-btn disable"> </div>
+                <span class="header">Garden Lights</span>
+            </li>
+            <li>
+                <div class="power-btn disable"> </div>
+                <span class="header">Pool Cover</span>
+            </li>
+            <li>
+                <div class="power-btn disable"> </div>
+                <span class="header">Garage Door</span>
+            </li>
+            <li>
+                <div class="power-btn disable"> </div>
+                <span class="header">Monion Sensor</span>
+            </li>
+            <li>
+                <div class="power-btn on"> </div>
+                <span class="header">Rain Sensor</span>
+            </li>
+            <li>
+                <div class="power-btn on"> </div>
+                <span class="header">Hall Lights</span>
+            </li>
+            <li>
+                <div class="power-btn disable"> </div>
+                <span class="header">Water Level</span>
+            </li>
+
+        </ul>
+    </div>
+</div>

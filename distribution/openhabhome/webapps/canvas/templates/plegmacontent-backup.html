@@ -1,0 +1,64 @@
+<div id="content" ng-controller="subscriptionsController">
+
+    <div id="content-header">
+        <h1>{{title}}</h1> <h1 class="print-date">{{date}}</h1>
+    </div> <!-- #content-header -->
+
+
+    <div id="content-container" ng-controller="rowController">
+
+        <div class="row" ng-repeat="row in rowsTexts">
+            <div ng-repeat="widget in row" class="col-md-4 col-sm-4">
+                <plegma-single-value widget="widget"></plegma-single-value>
+            </div>
+        </div>
+
+        <div class="row" ng-repeat="row in rowsHighcharts">
+            <div ng-repeat="widget in row" class="col-md-12 col-sm-12">
+                <plegma-highcharts widget="widget" persistence="psql"></plegma-highcharts>
+            </div>
+        </div>
+
+        <div class="row" ng-repeat="row in rowsMorris">
+            <div ng-repeat="widget in row" class="col-md-12 col-sm-12">
+                <plegma-morris widget="widget" persistence="psql"></plegma-morris>
+            </div>
+        </div>
+
+        <div class="row" ng-repeat="row in rowsWebviews">
+            <div ng-repeat="widget in row" class="col-md-12 col-sm-12">
+                <plegma-webview widget="widget"></plegma-webview>
+            </div>
+        </div>
+
+        <div class="row" ng-repeat="row in rowsImages">
+            <div ng-repeat="widget in row" class="col-md-12 col-sm-12">
+                <plegma-imageview widget="widget"></plegma-imageview>
+            </div>
+        </div>
+        <div class="row" ng-repeat="row in rowsRRD4J">
+            <div ng-repeat="widget in row" class="col-md-12 col-sm-12">
+                <plegma-rrd4j widget="widget"></plegma-rrd4j>
+            </div>
+        </div>
+
+        <div class="row" ng-repeat="row in rowsStates" ng-if="showLinks">
+            <div ng-repeat="state in row" class="col-md-4 col-sm-4">
+                <div class="portlet">
+                    <div class="portlet-header">
+                        <h3>{{state.label}}</h3>
+                    </div> <!-- /.portlet-header -->
+                    <div class="portlet-content">
+                        <button ui-sref="{{state.id}}" type="button" class="btn btn-lg btn-primary" style="width: 100%">
+                            <i class="{{state.class.join(' ')}}"></i>
+                        </button>
+                        <!--{{state}}-->
+                        <!--<a ui-sref="{{state.id}}"><img src="./img/questionmark.jpg" style="width: 100%"/></a>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- /#content-container -->
+<!-- <plegma-webview title="Power" url="http://pleg.no-ip.org:81/pleg/power.html"></plegma-webview> -->
+</div>
