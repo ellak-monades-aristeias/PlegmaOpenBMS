@@ -1,0 +1,36 @@
+/*
+//building power analyser
+
+Number   HEM_E     "Energy [%.1f kWh]"    { zwave="2:command=METER, meter_scale=E_KWh, refresh_interval=10" }
+Number   HEM_P     "Power [%.1f W]"       { zwave="2:command=METER, meter_scale=E_W, refresh_interval=10" }
+Number   HEM_V     "Voltage [%.1f V]"     { zwave="2:command=METER, meter_scale=E_V, refresh_interval=10" }
+Number   HEM_C     "Current [%.1f A]"     { zwave="2:command=METER, meter_scale=E_A, refresh_interval=10" }
+
+Number   HEM_E1    "L1 Energy [%.1f kWh]"     { zwave="2:1:command=METER, meter_scale=E_KWh, refresh_interval=10" }
+Number   HEM_E2    "L2 Energy [%.1f kWh]"     { zwave="2:2:command=METER, meter_scale=E_KWh, refresh_interval=10" }
+Number   HEM_E3    "L3 Energy [%.1f kWh]"     { zwave="2:3:command=METER, meter_scale=E_KWh, refresh_interval=10" }
+
+Number   HEM_P1    "L1 Power [%.1f W]"     { zwave="2:1:command=METER, meter_scale=E_W, refresh_interval=10" }
+Number   HEM_P2    "L2 Power [%.1f W]"     { zwave="2:2:command=METER, meter_scale=E_W, refresh_interval=10" }
+Number   HEM_P3    "L3 Power [%.1f W]"     { zwave="2:3:command=METER, meter_scale=E_W, refresh_interval=10" }
+
+Number   HEM_V1    "L1 Voltage [%.1f V]"     { zwave="2:1:command=METER, meter_scale=E_V, refresh_interval=10" }
+Number   HEM_V2    "L2 Voltage [%.1f V]"     { zwave="2:2:command=METER, meter_scale=E_V, refresh_interval=10" }
+Number   HEM_V3    "L3 Voltage [%.1f V]"     { zwave="2:3:command=METER, meter_scale=E_V, refresh_interval=10" }
+
+Number   HEM_C1    "L1 Current [%.1f A]"     { zwave="2:1:command=METER, meter_scale=E_A, refresh_interval=10" }
+Number   HEM_C2    "L2 Current [%.1f A]"     { zwave="2:2:command=METER, meter_scale=E_A, refresh_interval=10" }
+Number   HEM_C3    "L3 Current [%.1f A]"     { zwave="2:3:command=METER, meter_scale=E_A, refresh_interval=10" }
+
+Number building_power  "Building Active power [%.0f W]" <socket> 
+Number building_totalenergy  "Building Total energy [%.0f Wh]" <socket> 
+
+Number Energy_used_today "Todays Energy [%d Wh]" <socket>
+Number Energy_used_month "Months Energy [%d Wh]" <socket>
+Number Energy_used_total "Total Energy [%d Wh]" <socket>
+
+Number AvPower_today "Todays av. power [%d W]" <socket>
+Number AvPower_yesterday "Yesterdays av. power [%d W]" <socket>
+Number AvPower_month "Months av. power [%d W]" <socket>
+Number AvPower_total "Total av. power [%d kW]" <socket>
+*/

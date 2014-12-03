@@ -1,0 +1,37 @@
+/*Group SunnyWebBox (All) 
+
+//SOLAR
+Group Espace_141 (SunnyWebBox)
+Group Espace_401 (SunnyWebBox)
+Group Espace_336 (SunnyWebBox)
+Group Espace_Ypati (SunnyWebBox)
+Group Espace_overview (SunnyWebBox)
+
+Number Espace_141_Current_Power "Espace_141 Current Power [%.0f W]" (SunnyWebBox,Espace_141) {sunnywebbox="SENS0700:30191,GriPwr,URL1"}
+Number Espace_141_Day_Energy "Espace_141 Day energy [%.1f kWh]" (SunnyWebBox,Espace_141,Espace_overview) {sunnywebbox="SENS0700:30191,GriEgyTdy,URL1"}
+Number Espace_141_Total_Energy "Espace_141 Total energy [%.1f kWh]" (SunnyWebBox,Espace_141) {sunnywebbox="SENS0700:30191,GriEgyTot,URL1"}
+Number Espace_141_SolarTemp1 "Espace_141 Module temperature [%.1f C]" <temperature> (SunnyWebBox, Espace_141) {sunnywebbox="SENS0700:30191,TmpMdul C"}
+Number Espace_141_AmbientTemp1 "Espace_141 Ambient temperature [%.1f C]" <temperature> (SunnyWebBox, Espace_141) {sunnywebbox="SENS0700:30191,TmpAmb C"}
+Number Espace_141_SolarWind1 "Espace_141 Wind speed [%.1f m/s]" <wind> (SunnyWebBox, Espace_141) {sunnywebbox="SENS0700:30191,WindVel m/s"}
+
+Number Espace_401_Current_Power "Espace_401 Current Power [%.0f W]" (SunnyWebBox,Espace_401) {sunnywebbox="SENS0700:28785,GriPwr,URL2"}
+Number Espace_401_Day_Energy "Espace_401 Day energy [%.1f kWh]" (SunnyWebBox,Espace_401,Espace_overview) {sunnywebbox="SENS0700:28785,GriEgyTdy,URL2"}
+Number Espace_401_Total_Energy "Espace_401 Total energy [%.1f kWh]" (SunnyWebBox,Espace_401) {sunnywebbox="SENS0700:28785,GriEgyTot,URL2"}
+Number Espace_401_SolarTemp1 "Espace_401 Module temperature [%.1f C]" <temperature> (SunnyWebBox, Espace_401) {sunnywebbox="SENS0700:28785,TmpMdul C"}
+Number Espace_401_AmbientTemp1 "Espace_401 Ambient temperature [%.1f C]" <temperature> (SunnyWebBox, Espace_401) {sunnywebbox="SENS0700:28785,TmpAmb C"}
+Number Espace_401_SolarWind1 "Espace_401 Wind speed [%.1f m/s]" <wind> (SunnyWebBox, Espace_401) {sunnywebbox="SENS0700:28785,WindVel m/s"}
+
+Number Espace_336_Current_Power "Espace_336 Current Power [%.0f W]" (SunnyWebBox,Espace_336) {sunnywebbox="SENS0700:30940,GriPwr,URL3"}
+Number Espace_336_Day_Energy "Espace_336 Day energy [%.1f kWh]" (SunnyWebBox,Espace_336,Espace_overview) {sunnywebbox="SENS0700:30940,GriEgyTdy,URL3"}
+Number Espace_336_Total_Energy "Espace_336 Total energy [%.1f kWh]" (SunnyWebBox,Espace_336) {sunnywebbox="SENS0700:30940,GriEgyTot,URL3"}
+Number Espace_336_SolarTemp1 "Espace_336 Module temperature [%.1f C]" <temperature> (SunnyWebBox, Espace_336) {sunnywebbox="SENS0700:30940,TmpMdul C"}
+Number Espace_336_AmbientTemp1 "Espace_336 Ambient temperature [%.1f C]" <temperature> (SunnyWebBox, Espace_336) {sunnywebbox="SENS0700:30940,TmpAmb C"}
+Number Espace_336_SolarWind1 "Espace_336 Wind speed [%.1f m/s]" <wind> (SunnyWebBox, Espace_336) {sunnywebbox="SENS0700:30940,WindVel m/s"}
+
+Number Espace_Ypati_Current_Power "Espace_Ypati Current Power [%.0f W]" (SunnyWebBox,Espace_Ypati) {sunnywebbox="SENS0700:31326,GriPwr,URL4"}
+Number Espace_Ypati_Day_Energy "Espace_Ypati Day energy [%.1f kWh]" (SunnyWebBox,Espace_Ypati,Espace_overview) {sunnywebbox="SENS0700:31326,GriEgyTdy,URL4"}
+Number Espace_Ypati_Total_Energy "Espace_Ypati Total energy [%.1f kWh]" (SunnyWebBox,Espace_Ypati) {sunnywebbox="SENS0700:31326,GriEgyTot,URL4"}
+Number Espace_Ypati_SolarTemp1 "Espace_Ypati Module temperature [%.1f C]" <temperature> (SunnyWebBox, Espace_Ypati) {sunnywebbox="SENS0700:31326,TmpMdul C"}
+Number Espace_Ypati_AmbientTemp1 "Espace_Ypati Ambient temperature [%.1f C]" <temperature> (SunnyWebBox, Espace_Ypati) {sunnywebbox="SENS0700:31326,TmpAmb C"}
+Number Espace_Ypati_SolarWind1 "Espace_Ypati Wind speed [%.1f m/s]" <wind> (SunnyWebBox, Espace_Ypati) {sunnywebbox="SENS0700:31326,WindVel m/s"}
+*/

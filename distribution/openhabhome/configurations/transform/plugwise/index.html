@@ -1,0 +1,57 @@
+<html>
+</br>
+<b>
+PLEGMA.xml</b>
+</br>
+Custom API for PLEG integration
+</br>
+</br>
+<a href=plegma.xml?type=modules> modules </a>
+</br>
+<a href=plegma.xml?type=modules&moduleid=2> module by id </a>
+</br>
+<a href=plegma.xml?type=appliances> appliances </a>
+</br>
+<a href=plegma.xml?type=appliances&applianceid=2> appliances by id </a>
+</br>
+<a href=plegma.xml?type=appliances&roomid=1> appliances by room </a>
+</br>
+<a href=plegma.xml?type=appliances&groupid=1> appliances by group </a>
+</br>
+<a href=plegma.xml?type=rooms> rooms </a>
+
+</br>
+<a href=../rc.html> remote control appliances </a>
+
+</br>
+</br>
+
+<br>
+<b>data.xml.</b><br>
+This file collects data from Plugwise source and creates an xml file.<br>
+<br>
+data.xml<br>
+<table border=1 width=700> 
+<td valign=top>type</td><td valign=top>rooms<br>groups<br>appliances</td><td valign=top>Shows Room names<br>Shows Group names<br>Shows appliances</td><tr>
+			
+<td valign=top>roomid</td><td valign=top>Id of room</td><td valign=top>Can only be used in combination with type appliances<br>And will show all Appliances in room with id #</td><tr>
+	
+<td valign=top>groupid</td><td valign=top>Id of room</td><td valign=top>Can only be used in combination with type appliances<br>And will show all Appliances in group with id #</td><tr>
+</table>							
+Example: data.xml?type=appliances&roomid=2 (will show all aplliances in room 2)<br>
+<br>							
+<br>							
+<b>actions.html</b><br>
+This file contains actions that can be send to Plugwise source.<br>
+<br>
+There are currently 4 options<br>
+<br>
+- switchon<br>
+- switchoff<br>
+- lockon<br>
+- lockoff<br>
+<br>			
+all options need an appliance id.<br>
+<br>
+Example: actions.html?option=switchoff&id=22 (will turn off appliance 22)<br>
+</html>

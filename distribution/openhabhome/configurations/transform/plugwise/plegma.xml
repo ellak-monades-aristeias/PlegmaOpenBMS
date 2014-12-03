@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
+<items type="array">
+<% function echoAppliances($applianceArray, $roomID) %>
+<%
+  if ($applianceArray.ClassName == "Array")
+    
+    $onLineCount = 0
+    $totalCount  = $applianceArray.Count
+    foreach $applianceArray
+     if $_Value.IsOnline  
+       $onLineCount += 1
+      /if
+    /foreach
+    
+    foreach $applianceArray
+      $appliance = $_Value
+      if $_Value.IsOnline 
+        echo "<appliance>"
+      	echo "<id>",$appliance.Id,"</id>"
+      	echo "<name>",$appliance.Name.Replace("'","`").Replace("&","+").Replace("<","("),"</name>"
+      	echo "<image>",$appliance.StatusImageName,".png</image>"
+      	echo "<locked>",(($appliance.DoNotSwitchOff == true) ? 'lockoff' : 'lockon'),"</locked>"
+	    echo "<realstate>",$appliance.PowerState,"</realstate>"
+      	echo "<powerstate>",$appliance.PowerState,"</powerstate>"
+      	echo "<powerusage>",$appliance.PowerUsage,"</powerusage>"
+      	echo "<TotalUsageToday>",$appliance.TotalUsageToday,"</TotalUsageToday>"
+		echo "<TotalUsageStartDate>",$appliance.TotalUsageStartDate,"</TotalUsageStartDate>"
+		echo "<TotalUsage>",$appliance.TotalUsage,"</TotalUsage>"
+        echo "<titnum> (",$onLineCount,"/",$totalCount,")</titnum>"
+        echo "</appliance>\n"
+      /if
+    /foreach
+    
+    echo "<appliance><id>0</id><titnum> (",$onLineCount,"/",$totalCount,")</titnum></appliance>"
+  /if
+%>
+<% /function %>
+<%
+if Request.get["type"] =="rooms" 
+   foreach Plugwise.Rooms 
+    $i = 0 
+  	$room = .id 
+  	foreach .Appliances 
+  	 $i = $i+1 
+  	/foreach 
+  	if $i >= 1 	
+  	 echo "<room>"
+		echo "<id>",.Id,"</id>"
+  		echo "<title>",$_Value.Name.Replace("'","`").Replace("&","+").Replace("<","("),"</title>"
+  		echo "<powerusage>",.PowerUsage,"</powerusage>"
+		echo "<TotalUsageToday>",.TotalUsageToday,"</TotalUsageToday>"
+		echo "<TotalUsage>",.TotalUsage,"</TotalUsage>"
+	    //echo "<temperature>",.TemperatureAndHumidity.temperature,"</temperature>"
+	    //echo "<humidity>",.TemperatureAndHumidity.humidity,"</humidity>"
+  	 echo "</room>\n"
+  	/if  
+   /foreach 
+/if
+
+if ((Request.get["type"] =="modules") && (Request.get["moduleid"] != undefined) && (Request.get["moduleid"] != ''))
+
+     $modul = Module(Float(Request.get["moduleid"]))
+     
+	    echo "<module>"
+		echo "<id>",$modul.Id,"</id>"
+		//echo "<title>",$modul.Name.Replace("'","`").Replace("&","+").Replace("<","("),"</title>"
+		echo "<Status>",$modul.Status,"</Status>"
+		echo "<StatusImageName>",$modul.StatusImageName,"</StatusImageName>"
+		echo "<powerusage>",$modul.PowerUsage,"</powerusage>"
+		echo "<type>",$modul.Type,"</type>"
+		echo "<temperature>",$modul.Temperature,"</temperature>"
+		echo "<humidity>",$modul.Humidity,"</humidity>"
+	    echo "</module>\n"
+	    
+/if
+
+if ((Request.get["type"] =="modules") &&  (Request.get["moduleid"] == undefined ))
+   foreach Plugwise.Modules 	
+	 echo "<module>"
+		echo "<id>",.Id,"</id>"
+		echo "<title>",$_Value.Name.Replace("'","`").Replace("&","+").Replace("<","("),"</title>"
+		echo "<Status>",.Status,"</Status>"
+		echo "<StatusImageName>",.StatusImageName,"</StatusImageName>"
+		echo "<powerusageround>",Math.Round(.PowerUsage)," W</powerusageround>"
+		echo "<powerusage>",.PowerUsage," W</powerusage>"
+		echo "<type>",.Type,"</type>"
+		echo "<temperature>",.Temperature,"</temperature>"
+		echo "<humidity>",.Humidity,"</humidity>"
+	 echo "</module>\n"
+  /foreach
+ /if
+
+   
+if Request.get["type"] == 'appliances'
+  echo "<msg type='appliances'/>"
+  if ((Request.get["roomid"] != undefined) && (Request.get["roomid"] != ''))
+     $room = Room(Float(Request.get["roomid"])) 
+	   if ($room != null)
+      echo "<msg text='show all appliances of roomid ",$room.ID,"'/>"
+      //works only on webserver via source gui
+	  //echo "<msg text='Temp:",$room.TemperatureAndHumidity.temperature,"'/>"
+	  //echo "<msg text='Hum:",$room.TemperatureAndHumidity.humidity,"'/>"
+      echoAppliances($room.Appliances, $room.ID)
+	  
+     /if
+  else if ((Request.get["groupid"] != undefined) && (Request.get["groupid"] != ''))
+    $group = Group(Float(Request.get["groupid"])) 
+	  if $group != null
+      echo "<msg text='show all appliances of groupid ",$group.ID,"'/>\n"
+      echoAppliances($group.Appliances, $group.ID)
+    /if
+  
+  else if ((Request.get["applianceid"] != undefined) && (Request.get["applianceid"] != ''))
+      echo "<msg text='show appliance id ",Request.get["applianceid"], "'/>"
+    //echo "<msg text='show appliance power:", Appliance(Float(Request.get["applianceid"])).PowerUsage , "'/>"
+  
+   $appliance = Appliance(Float(Request.get["applianceid"]))
+      if $appliance.IsOnline 
+        echo "<appliance>"
+      	echo "<id>",$appliance.Id,"</id>"
+      	echo "<name>",$appliance.Name.Replace("'","`").Replace("&","+").Replace("<","("),"</name>"
+      	echo "<image>",$appliance.StatusImageName,".png</image>"
+      	echo "<locked>",(($appliance.DoNotSwitchOff == true) ? 'lockoff' : 'lockon'),"</locked>"
+	    echo "<realstate>",$appliance.PowerState,"</realstate>"
+      	echo "<powerstate>",$appliance.PowerState,"</powerstate>"
+      	echo "<powerusage>",$appliance.PowerUsage,"</powerusage>"
+      	echo "<TotalUsageToday>",$appliance.TotalUsageToday,"</TotalUsageToday>"
+		echo "<TotalUsageStartDate>",$appliance.TotalUsageStartDate,"</TotalUsageStartDate>"
+		echo "<TotalUsage>",$appliance.TotalUsage,"</TotalUsage>"
+        echo "</appliance>\n"
+      /if
+  
+  
+  
+  else
+    echo "<msg text='show all appliances'/>"
+    echoAppliances(Plugwise.Appliances, 0)
+  /if 
+/if 
+%>
+</items>

@@ -1,120 +1,166 @@
 Group All
-Group gGF 		(All)
-Group gFF 		(All)
-Group gC 		(All)
-Group Outdoor 	(All)
-Group Shutters 	(All)
+
+Group gPLEG 	(All)
 Group Weather 	(All)
 Group Status 	(All)
 
-Group GF_Living 	"Living Room" 	<video> 	(gGF)
-Group GF_Kitchen 	"Kitchen" 		<kitchen> 	(gGF)
-Group GF_Toilet 	"Toilet" 		<bath> 		(gGF)
-Group GF_Corridor 	"Corridor" 		<corridor> 	(gGF)
+Group Zwave (All) 
+Group ActiveSockets (All)
 
-Group FF_Bath 		"Bathroom" 		<bath> 		(gFF)
-Group FF_Office 	"Office" 		<office> 	(gFF)
-Group FF_Child 		"Child's Room" 	<boy1> 		(gFF)
-Group FF_Bed 		"Bedroom" 		<bedroom> 	(gFF)
-Group FF_Corridor 	"Corridor" 		<corridor> 	(gFF)
+//Plegma office
 
-/* active groups */
-Group:Switch:OR(ON, OFF) 		Lights 		"All Lights [(%d)]" 								(All)
-Group:Switch:OR(ON, OFF) 		Heating 	"No. of Active Heatings [(%d)]" 	<heating> 		(All)
-Group:Number:AVG 				Temperature	"Avg. Room Temperature [%.1f °C]" 	<temperature>	(Status)
-Group:Contact:OR(OPEN, CLOSED) 	Windows 	"Open windows [(%d)]"				<contact>		(All)
 
-/* Lights */
-Dimmer Light_GF_Living_Table 		"Table" 		(GF_Living, Lights)
-Switch Light_GF_Corridor_Ceiling 	"Ceiling" 		(GF_Corridor, Lights)
-Switch Light_GF_Kitchen_Ceiling 	"Ceiling" 		(GF_Kitchen, Lights)
-Switch Light_GF_Kitchen_Table 		"Table" 		(GF_Kitchen, Lights)
-Switch Light_GF_Corridor_Wardrobe 	"Wardrobe"	 	(GF_Corridor, Lights)
-Switch Light_GF_Toilet_Ceiling 		"Ceiling" 		(GF_Toilet, Lights)
-Switch Light_GF_Toilet_Mirror 		"Mirror" 		(GF_Toilet, Lights)
+//building power analyser
+Number   HEM_E     "Energy [%.1f kWh]"  (Zwave)  { zwave="13:command=meter, meter_scale=E_KWh , refresh_interval=600" }
+Number   HEM_P     "Power [%.1f W]"    (Zwave)    { zwave="13:command=meter, meter_scale=E_W , refresh_interval=600" }
+Number   HEM_V     "Voltage [%.1f V]"   (Zwave)    { zwave="13:command=meter, meter_scale=E_V , refresh_interval=600" }
+Number   HEM_C     "Current [%.1f A]"   (Zwave)    { zwave="13:command=meter, meter_scale=E_A , refresh_interval=600" }
 
-Switch Light_FF_Bath_Ceiling 		"Ceiling" 		(FF_Bath, Lights)
-Switch Light_FF_Bath_Mirror 		"Mirror" 		(FF_Bath, Lights)
-Switch Light_FF_Corridor_Ceiling 	"Corridor" 		(FF_Corridor, Lights)
-Switch Light_FF_Office_Ceiling 		"Ceiling" 		(FF_Office, Lights)
-Switch Light_FF_Child_Ceiling 		"Ceiling" 		(FF_Child, Lights)
-Switch Light_FF_Bed_Ceiling 		"Ceiling" 		(FF_Bed, Lights)
+Number   HEM_E1    "L1 Energy [%.1f kWh]"   (Zwave)  { zwave="13:1:command=meter, meter_scale=E_KWh , refresh_interval=600" }
+Number   HEM_E2    "L2 Energy [%.1f kWh]"   (Zwave)  { zwave="13:2:command=meter, meter_scale=E_KWh , refresh_interval=600" }
+Number   HEM_E3    "L3 Energy [%.1f kWh]"   (Zwave)  { zwave="13:3:command=meter, meter_scale=E_KWh , refresh_interval=600" }
 
-Switch Light_C_Corridor_Ceiling 	"Ceiling" 		(gC, Lights)
-Switch Light_C_Staircase 			"Staircase" 	(gC, Lights)
-Switch Light_C_Washing_Ceiling 		"Washing" 		(gC, Lights)
-Switch Light_C_Workshop 			"Workshop" 		(gC, Lights)
+Number   HEM_P1    "L1 Power [%.1f W]"     (Zwave)  { zwave="13:1:command=meter, meter_scale=E_W , refresh_interval=600" }
+Number   HEM_P2    "L2 Power [%.1f W]"     (Zwave)  { zwave="13:2:command=meter, meter_scale=E_W, refresh_interval=600" } 
+Number   HEM_P3    "L3 Power [%.1f W]"     (Zwave)  { zwave="13:3:command=meter, meter_scale=E_W, refresh_interval=600" }
 
-Switch Light_Outdoor_Garage 		"Garage" 		(Outdoor, Lights)
-Switch Light_Outdoor_Terrace 		"Terrace" 		(Outdoor, Lights)
-Switch Light_Outdoor_Frontdoor 		"Frontdoor"		(Outdoor, Lights)
+Number   HEM_V1    "L1 Voltage [%.1f V]"   (Zwave)  { zwave="13:1:command=meter, meter_scale=E_V, refresh_interval=600" }
+Number   HEM_V2    "L2 Voltage [%.1f V]"   (Zwave)  { zwave="13:2:command=meter, meter_scale=E_V, refresh_interval=600" }
+Number   HEM_V3    "L3 Voltage [%.1f V]"   (Zwave)  { zwave="13:3:command=meter, meter_scale=E_V, refresh_interval=600" }
 
-/* Heating */
-Switch Heating_GF_Corridor 	"GF Corridor" 	<heating>	(GF_Corridor, Heating)
-Switch Heating_GF_Toilet 	"Toilet"	 	<heating>	(GF_Toilet, Heating)
-Switch Heating_GF_Living 	"Livingroom" 	<heating>	(GF_Living, Heating)
-Switch Heating_GF_Kitchen 	"Kitchen" 		<heating>	(GF_Kitchen, Heating)
+Number   HEM_C1    "L1 Current [%.1f A]"   (Zwave)  { zwave="13:1:command=meter, meter_scale=E_A, refresh_interval=600" }
+Number   HEM_C2    "L2 Current [%.1f A]"   (Zwave)  { zwave="13:2:command=meter, meter_scale=E_A, refresh_interval=600" }
+Number   HEM_C3    "L3 Current [%.1f A]"   (Zwave)  { zwave="13:3:command=meter, meter_scale=E_A, refresh_interval=600" }
 
-Switch Heating_FF_Bath 		"Bath" 			<heating>	(FF_Bath, Heating)
-Switch Heating_FF_Office 	"Office" 		<heating>	(FF_Office, Heating)
-Switch Heating_FF_Child 	"Child's Room" 	<heating>	(FF_Child, Heating)
-Switch Heating_FF_Bed 		"Bedroom" 		<heating>	(FF_Bed, Heating)
 
-/* Rollershutters */
-Switch Shutter_all (Shutters)
+Number building_power  "Building Active power [%.0f W]" <socket> 
+Number building_totalenergy  "Building Total energy [%.0f Wh]" <socket> 
 
-Rollershutter Shutter_GF_Toilet 		"Toilet"		(GF_Toilet, Shutters)
-Rollershutter Shutter_GF_Kitchen 		"Kitchen"		(GF_Kitchen, Shutters)
-Rollershutter Shutter_GF_Living 		"Livingroom"	(GF_Living, Shutters)
+Number Energy_used_today "Todays Energy [%d Wh]" <socket>
+Number Energy_used_month "Months Energy [%d Wh]" <socket>
+Number Energy_used_total "Total Energy [%d Wh]" <socket>
 
-Rollershutter Shutter_FF_Bed 			"Bedroom"		(FF_Bed, Shutters)
-Rollershutter Shutter_FF_Bath 			"Bath"			(FF_Bath, Shutters)
-Rollershutter Shutter_FF_Office_Window	"Office Window"	(FF_Office, Shutters)
-Rollershutter Shutter_FF_Office_Door 	"Office Door"	(FF_Office, Shutters)
+Number AvPower_today "Todays av. power [%d W]" <socket>
+Number AvPower_yesterday "Yesterdays av. power [%d W]" <socket>
+Number AvPower_month "Months av. power [%d W]" <socket>
+Number AvPower_total "Total av. power [%d kW]" <socket>
 
-/* Indoor Temperatures */
-Number Temperature_GF_Corridor 	"Temperature [%.1f °C]"	<temperature>	(Temperature, GF_Corridor)
-Number Temperature_GF_Toilet 	"Temperature [%.1f °C]"	<temperature>	(Temperature, GF_Toilet)
-Number Temperature_GF_Living 	"Temperature [%.1f °C]"	<temperature>	(Temperature, GF_Living)
-Number Temperature_GF_Kitchen 	"Temperature [%.1f °C]"	<temperature>	(Temperature, GF_Kitchen)
-Number Temperature_FF_Bath 		"Temperature [%.1f °C]"	<temperature>	(Temperature, FF_Bath)
-Number Temperature_FF_Office 	"Temperature [%.1f °C]"	<temperature>	(Temperature, FF_Office)
-Number Temperature_FF_Child 	"Temperature [%.1f °C]"	<temperature>	(Temperature, FF_Child)
-Number Temperature_FF_Bed 		"Temperature [%.1f °C]"	<temperature>	(Temperature, FF_Bed)
 
-/* Windows */
-Contact Window_GF_Frontdoor 	"Frontdoor [MAP(en.map):%s]"		(GF_Corridor, Windows)
-Contact Window_GF_Kitchen 		"Kitchen [MAP(en.map):%s]"			(GF_Kitchen, Windows)
-Contact Window_GF_Living 		"Terrace door [MAP(en.map):%s]"		(GF_Living, Windows)
-Contact Window_GF_Toilet 		"Toilet [MAP(en.map):%s]"			(GF_Toilet, Windows)
 
-Contact Window_FF_Bath 			"Bath [MAP(en.map):%s]"				(FF_Bath, Windows)
-Contact Window_FF_Bed 			"Bedroom [MAP(en.map):%s]"			(FF_Bed, Windows)
-Contact Window_FF_Office_Window "Office Window [MAP(en.map):%s]"	(FF_Office, Windows)
-Contact Window_FF_Office_Door 	"Balcony Door [MAP(en.map):%s]"		(FF_Office, Windows)
+Group pw
+//Number pw1      "circle1+ Power [%d W]" <socket> (pw) { http="<[plegmodule2:60000:REGEX(.*?<powerusage>(.*?)</powerusage>.*)]"}
+//Number pw2      "circle2 Power [%d W]" <socket> (pw)  { http="<[plegmodule3:60000:REGEX(.*?<powerusage>(.*?)</powerusage>.*)]"}
 
-Contact Garage_Door 			"Garage Door [MAP(en.map):%s]"		(Outdoor, Windows)
+//String ap1name   "Appliance 1 is:[%s]" <socket> (pw) { http="<[plegappliance1:60000:REGEX(.*?<name>(.*?)</name>.*)]"}
+Number ap1power  "Meeting Room A/C [%.1f W]" <socket> (pw,ActiveSockets) { http="<[plegappliance1:60000:REGEX(.*?<powerusage>(.*?)</powerusage>.*)]"}
+Number ap1totaltoday  "Meeting Room A/C Today's Energy [%.1f kWh]" <socket> (pw,pw_chart3) { http="<[plegappliance1:60000:REGEX(.*?<TotalUsageToday>(.*?)</TotalUsageToday>.*)]"}
+Number ap1total  "Meeting Room A/C Total Energy [%.1f kWh]" <socket> (pw) { http="<[plegappliance1:60000:REGEX(.*?<TotalUsage>(.*?)</TotalUsage>.*)]"}
 
-Group Weather_Chart													(Weather)
-Number Weather_Temperature 		"Outside Temperature [%.1f °C]"	<temperature> (Weather_Chart) { http="<[http://weather.yahooapis.com/forecastrss?w=638242&u=c:60000:XSLT(yahoo_weather_temperature.xsl)]" }
-Number Weather_Temp_Max 		"Todays Maximum [%.1f °C]"	<temperature> (Weather_Chart)
-Number Weather_Temp_Min 		"Todays Minimum [%.1f °C]"	<temperature> (Weather_Chart)
-Number Weather_Chart_Period		"Chart Period"
-DateTime Weather_LastUpdate		"Last Update [%1$ta %1$tR]"	<clock>
+//String ap2name   "Appliance2 is:[%s]" <socket> (pw) { http="<[plegappliance2:60000:REGEX(.*?<name>(.*?)</name>.*)]"}
+Number ap2power  "Exec Office A/C Power [%.1f W]" <socket> (pw,ActiveSockets) { http="<[plegappliance2:60000:REGEX(.*?<powerusage>(.*?)</powerusage>.*)]"}
+Number ap2totaltoday  "Exec Office A/C Today's Energy [%.1f kWh]" <socket> (pw,pw_chart3) { http="<[plegappliance2:60000:REGEX(.*?<TotalUsageToday>(.*?)</TotalUsageToday>.*)]"}
+Number ap2total  "Exec Office A/C Total Energy [%.1f kWh]" <socket> (pw) { http="<[plegappliance2:60000:REGEX(.*?<TotalUsage>(.*?)</TotalUsage>.*)]"}
+
+
+/* Fibaro */
+Switch Zwave2  "Desktop CEO on/off command=switch_binary[%s]" {zwave="2:command=switch_binary"}
+Number Zwave2a "Desktop CEO Power[%.1f W]" (Zwave,ActiveSockets) {zwave="2:command=sensor_multilevel,meter_scale=E_W"}
+Number Zwave2b "Desktop CEO Total Energy[%.1f kWh]" (Zwave) {zwave="2:command=meter"} 
+
+Switch Zwave3  "Desktop CTO command=switch_binary[%s]"  {zwave="3:command=switch_binary"}
+//Number Zwave3a "Desktop CTO Power[%.1f W]" (Zwave,ActiveSockets) {  zwave="3:command=sensor_multilevel,meter_scale=E_W"}
+Number Zwave3a "Desktop CTO Power[%.1f W]" (Zwave,ActiveSockets) {  zwave="3:command=sensor_multilevel,meter_scale=E_W" }
+
+Number Zwave3b "Desktop CTO Total Energy[%.1f kWh]" (Zwave) {zwave="3:command=meter"}
+
+Switch Zwave5  "Kitchen [%s]"  {zwave="5:command=switch_binary"}
+Number Zwave5a "Kitchen Power[%.1f W]" (Zwave,ActiveSockets) {zwave="5:command=sensor_multilevel,meter_scale=E_W"}
+Number Zwave5b "Kitchen Total Energy[%.1f kWh]" (Zwave) {zwave="5:command=meter"}
+
+Switch Zwave6  "Desktop R&D command=switch_binary[%s]"  {zwave="6:command=switch_binary"}
+Number Zwave6a "Desktop R&D Power[%.1f W]" (Zwave,ActiveSockets) {zwave="6:command=sensor_multilevel,meter_scale=E_W"}
+Number Zwave6b "Desktop R&D Total Energy[%.1f kWh]" (Zwave) {zwave="6:command=meter"} 
+
+Switch Zwave7  "Refrigerator command=switch_binary[%s]"  {zwave="7:command=switch_binary"}
+Number Zwave7a "Refrigerator Power[%.1f W]" (Zwave,ActiveSockets) {zwave="7:command=sensor_multilevel,meter_scale=E_W"}
+Number Zwave7b "Refrigerator Total Energy[%.1f kWh]" (Zwave) {zwave="7:command=meter"}
+
+Switch Zwave9  "Meeting Room A/C clone command=switch_binary[%s]"  {zwave="9:command=switch_binary"}
+Number Zwave9a "Meeting Room A/C clone Power[%.1f W]" (Zwave,ActiveSockets) {zwave="9:command=sensor_multilevel,meter_scale=E_W"}
+Number Zwave9b "Meeting Room A/C clone Total Energy[%.1f kWh]" (Zwave) {zwave="9:command=meter"}
+
+
+//Climate	
+Number Weather_Temperature 		"Outside Temperature [%.1f °C]"	<temperature> (Weather)  { http="<[http://weather.yahooapis.com/forecastrss?w=946738&u=c:960000:XSLT(yahoo/yahoo_weather_temperature.xsl)]"}
+Number Weather_Humidity 		"Outside Humidity [%d %%]"	<climate> (Weather)  { http="<[http://weather.yahooapis.com/forecastrss?w=946738&u=c:960000:REGEX(.*?humidity=\"(.*?)\".*)]"}
+Number Weather_Temp_Max 		"Todays Maximum [%.1f °C]"	    <temperature> 
+Number Weather_Temp_Min 		"Todays Minimum [%.1f °C]"   	<temperature> 
+
+Number pw3      "R&D Office Temperature [%.1f °C]" <temperature> (pw,Weather) { http="<[plegmodule4:60000:REGEX(.*?<temperature>(.*?)</temperature>.*)]"}
+Number pw4      "R&D Office Humidity[%.1f %%]" <climate> (pw,Weather)  { http="<[plegmodule4:60000:REGEX(.*?<humidity>(.*?)</humidity>.*)]"}
+
+Number Msensor_temperature "Exec Office Temperature [%.1f °C]"(Zwave){zwave="4:1:command=sensor_multilevel,sensor_type=1"}
+Number Msensor_humidity    "Exec Office Humidity [%d %%]" (Zwave)    	 {zwave="4:1:command=sensor_multilevel,sensor_type=5"}
+Number Msensor_light       "Office Light [%.0f Lux]" (Zwave) 	         {zwave="4:1:command=sensor_multilevel,sensor_type=3" }
+Contact Msensor_motion     "Office Occupancy [%s]"  (Zwave)            {zwave="4:1:command=basic" } //,respond_to_basic=true
+Number Msensor_battery     "Aeon4in1 battery [%s %%]"     (Zwave)      {zwave="4:1:command=battery" }
+
+/*
+//ether
+String emm_cmd 		"EMM TCP command [%s]" { tcp=">[192.168.2.12:1503:REGEX((.*))]"}
+Number emm_Temperature 		"EMM Temperature [%.1f °C]" (emm)
+Number emm_TotalEnergy 		"EMM Total Energy [%.1f kWh]" (emm)	 
+Number emm_ActivePower 		"EMM Active Power [%.1f kW]" (emm)
+Number emm_Channel1 		"EMM Channel #1 [%.1f kWh]" (emm)
+Number emm_Channel2 		"EMM Channel #2 [%.1f kWh]" (emm)
+Number emm_Channel3 		"EMM Channel #3 [%.1f kWh]" (emm)
+Number emm_Channel4 		"EMM Channel #4 [%.1f kWh]" (emm)
+Number emm_Channel5 		"EMM Channel #5 [%.1f kWh]" (emm)
+Number emm_Channel6 		"EMM Channel #6 [%.1f kWh]" (emm)
+Number emm_Channel7 		"EMM Channel #7 [%.1f kWh]" (emm)
+Number emm_Channel8 		"EMM Channel #8 [%.1f kWh]" (emm)
+*/
 
 /* NTP binding demo item */
-DateTime		Date			"Date [%1$tA, %1$td.%1$tm.%1$tY]"	<calendar>	{ ntp="Europe/Berlin:de_DE" }
+DateTime		Date	   "Date [%1$tA, %1$td.%1$tm.%1$tY]"	<calendar>	{ ntp="Europe/Athens:en_EN" }
 
-/* Demo items */
-Switch DemoSwitch				"Switch"
-Dimmer DimmedLight				"Dimmer [%d %%]"		<slider>
-Color  RGBLight					"RGB Light"				<slider>
-Rollershutter DemoShutter	 	"Roller Shutter"
-Dimmer DemoBlinds			 	"Blinds [%d %%]"		<rollershutter>
-Number Scene_General			"Scene"					<sofa>
-Number Radio_Station			"Radio"					<network>
-Dimmer Volume 					"Volume [%.1f %%]"
-Number Temperature_Setpoint		"Temperature [%.1f °C]" <temperature>
 
-String UnknownDevices    "Unknown Devices in Range: [%s]" { bluetooth="?" }
-Number NoOfPairedDevices "Paired Devices in Range: [%d]"  { bluetooth="!" }
+
+
+Group SunnyWebBox (All) 
+
+//SOLAR
+Group Espace_141 (SunnyWebBox)
+Group Espace_401 (SunnyWebBox)
+Group Espace_336 (SunnyWebBox)
+Group Espace_Ypati (SunnyWebBox)
+Group Espace_overview (SunnyWebBox)
+
+Number Espace_141_Current_Power "Espace_141 Current Power [%.0f W]" (SunnyWebBox,Espace_141) {sunnywebbox="SENS0700:30191,GriPwr,URL1"}
+Number Espace_141_Day_Energy "Espace_141 Day energy [%.1f kWh]" (SunnyWebBox,Espace_141,Espace_overview) {sunnywebbox="SENS0700:30191,GriEgyTdy,URL1"}
+Number Espace_141_Total_Energy "Espace_141 Total energy [%.1f kWh]" (SunnyWebBox,Espace_141) {sunnywebbox="SENS0700:30191,GriEgyTot,URL1"}
+Number Espace_141_SolarTemp1 "Espace_141 Module temperature [%.1f C]" <temperature> (SunnyWebBox, Espace_141) {sunnywebbox="SENS0700:30191,TmpMdul C"}
+Number Espace_141_AmbientTemp1 "Espace_141 Ambient temperature [%.1f C]" <temperature> (SunnyWebBox, Espace_141) {sunnywebbox="SENS0700:30191,TmpAmb C"}
+Number Espace_141_SolarWind1 "Espace_141 Wind speed [%.1f m/s]" <wind> (SunnyWebBox, Espace_141) {sunnywebbox="SENS0700:30191,WindVel m/s"}
+
+Number Espace_401_Current_Power "Espace_401 Current Power [%.0f W]" (SunnyWebBox,Espace_401) {sunnywebbox="SENS0700:28785,GriPwr,URL2"}
+Number Espace_401_Day_Energy "Espace_401 Day energy [%.1f kWh]" (SunnyWebBox,Espace_401,Espace_overview) {sunnywebbox="SENS0700:28785,GriEgyTdy,URL2"}
+Number Espace_401_Total_Energy "Espace_401 Total energy [%.1f kWh]" (SunnyWebBox,Espace_401) {sunnywebbox="SENS0700:28785,GriEgyTot,URL2"}
+Number Espace_401_SolarTemp1 "Espace_401 Module temperature [%.1f C]" <temperature> (SunnyWebBox, Espace_401) {sunnywebbox="SENS0700:28785,TmpMdul C"}
+Number Espace_401_AmbientTemp1 "Espace_401 Ambient temperature [%.1f C]" <temperature> (SunnyWebBox, Espace_401) {sunnywebbox="SENS0700:28785,TmpAmb C"}
+Number Espace_401_SolarWind1 "Espace_401 Wind speed [%.1f m/s]" <wind> (SunnyWebBox, Espace_401) {sunnywebbox="SENS0700:28785,WindVel m/s"}
+
+Number Espace_336_Current_Power "Espace_336 Current Power [%.0f W]" (SunnyWebBox,Espace_336) {sunnywebbox="SENS0700:30940,GriPwr,URL3"}
+Number Espace_336_Day_Energy "Espace_336 Day energy [%.1f kWh]" (SunnyWebBox,Espace_336,Espace_overview) {sunnywebbox="SENS0700:30940,GriEgyTdy,URL3"}
+Number Espace_336_Total_Energy "Espace_336 Total energy [%.1f kWh]" (SunnyWebBox,Espace_336) {sunnywebbox="SENS0700:30940,GriEgyTot,URL3"}
+Number Espace_336_SolarTemp1 "Espace_336 Module temperature [%.1f C]" <temperature> (SunnyWebBox, Espace_336) {sunnywebbox="SENS0700:30940,TmpMdul C"}
+Number Espace_336_AmbientTemp1 "Espace_336 Ambient temperature [%.1f C]" <temperature> (SunnyWebBox, Espace_336) {sunnywebbox="SENS0700:30940,TmpAmb C"}
+Number Espace_336_SolarWind1 "Espace_336 Wind speed [%.1f m/s]" <wind> (SunnyWebBox, Espace_336) {sunnywebbox="SENS0700:30940,WindVel m/s"}
+
+Number Espace_Ypati_Current_Power "Espace_Ypati Current Power [%.0f W]" (SunnyWebBox,Espace_Ypati) {sunnywebbox="SENS0700:31326,GriPwr,URL4"}
+Number Espace_Ypati_Day_Energy "Espace_Ypati Day energy [%.1f kWh]" (SunnyWebBox,Espace_Ypati,Espace_overview) {sunnywebbox="SENS0700:31326,GriEgyTdy,URL4"}
+Number Espace_Ypati_Total_Energy "Espace_Ypati Total energy [%.1f kWh]" (SunnyWebBox,Espace_Ypati) {sunnywebbox="SENS0700:31326,GriEgyTot,URL4"}
+Number Espace_Ypati_SolarTemp1 "Espace_Ypati Module temperature [%.1f C]" <temperature> (SunnyWebBox, Espace_Ypati) {sunnywebbox="SENS0700:31326,TmpMdul C"}
+Number Espace_Ypati_AmbientTemp1 "Espace_Ypati Ambient temperature [%.1f C]" <temperature> (SunnyWebBox, Espace_Ypati) {sunnywebbox="SENS0700:31326,TmpAmb C"}
+Number Espace_Ypati_SolarWind1 "Espace_Ypati Wind speed [%.1f m/s]" <wind> (SunnyWebBox, Espace_Ypati) {sunnywebbox="SENS0700:31326,WindVel m/s"}
+

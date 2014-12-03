@@ -1,0 +1,44 @@
+sitemap dev label="Plegma Labs"
+{
+	//Image url="http://localhost/images/logo.png" label="PLEGMA"
+	
+	 	Text label="Power Analyser" icon="bolt"
+		{
+			Text item=HEM_P
+			Text item=HEM_E
+			Text
+			Text item=HEM_V
+			Text item=HEM_C
+
+			Text label="3Phases Power" icon="bolt"
+			{
+			Text item=HEM_P1
+			Text item=HEM_P2
+			Text item=HEM_P3
+			}
+			
+			Text label="3Phases Energy" icon="bolt"
+			{	
+			Text item=HEM_E1
+			Text item=HEM_E2
+			Text item=HEM_E3
+			}
+			
+			Text label="3Phases Voltage" icon="bolt"
+			{
+			Text item=HEM_V1
+			Text item=HEM_V2
+			Text item=HEM_V3
+			}
+			
+			Text label="3Phases Current" icon="bolt"
+			{
+			Text item=HEM_C1
+			Text item=HEM_C2
+			Text item=HEM_C3
+			}
+		}
+		
+
+
+} //sitemap end

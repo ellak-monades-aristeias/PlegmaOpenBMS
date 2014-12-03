@@ -1,65 +1,189 @@
-sitemap demo label="Main Menu"
+sitemap demo label="Plegma Labs"
 {
-	Frame {
-		Group item=gFF label="First Floor" icon="firstfloor"
-		Group item=gGF label="Ground Floor" icon="groundfloor"
-		Group item=gC label="Cellar" icon="cellar"	
-		Group item=Outdoor icon="garden" 
-	}
-	Frame label="Weather" {
-		Text item=Weather_Temperature valuecolor=[Weather_LastUpdate=="Uninitialized"="lightgray",Weather_LastUpdate>90="lightgray",>25="orange",>15="green",>5="orange",<=5="blue"] {
-			Frame {
-				Text item=Weather_Temp_Max valuecolor=[>25="orange",>15="green",>5="orange",<=5="blue"]
-				Text item=Weather_Temp_Min valuecolor=[>25="orange",>15="green",>5="orange",<=5="blue"]
-				Text item=Weather_LastUpdate visibility=[Weather_LastUpdate>30] valuecolor=[Weather_LastUpdate>120="orange", Weather_LastUpdate>300="red"]
-			}
-			Frame {
-				Switch item=Weather_Chart_Period label="Chart Period" mappings=[0="Hour", 1="Day", 2="Week"]
-				Chart item=Weather_Chart period=h refresh=6000 visibility=[Weather_Chart_Period==0, Weather_Chart_Period=="Uninitialized"]
-				Chart item=Weather_Chart period=D refresh=30000 visibility=[Weather_Chart_Period==1]
-				Chart item=Weather_Chart period=W refresh=30000 visibility=[Weather_Chart_Period==2]
-			}
+	//Image url="http://localhost/images/logo.png" label="PLEGMA"
+
+	
+	 	Text label="DEV" icon="bolt"
+		{
+	       Text item=ap2total
+			Text item=Zwave2b  
+			Text item=Zwave3b
+			Text item=ap1total 
+			Text item=Zwave7b
+			Text item=Zwave5b
+			 Chart label="Debug" item=ap2total  period=d service="range=last_week|now,charttype=highcharts,items=Zwave2b|Zwave3b|Zwave5b|Zwave7b"
 		}
-	}
-	Frame label="Date" {
-		Text item=Date
-	}
-	Frame label="Demo" {
-		Text label="Group Demo" icon="firstfloor" {
-			Switch item=Lights mappings=[OFF="All Off"]
-			Group item=Heating
-			Group item=Windows
-			Text item=Temperature
+	
+	 	Text label="Power Analyser" icon="bolt"
+		{
+			Text item=HEM_P
+			Text item=HEM_E
+			Text
+			Text item=HEM_V
+			Text item=HEM_C
+			Chart label="Energy" item=HEM_E period=d service="range=last_month|now,charttype=barcharts,args=delta,items=HEM_E"
+			Chart label="Power" item=HEM_P period=d service="range=last_week|now,charttype=highcharts,items=HEM_P"
+			Chart label="Energy Debug" item=HEM_V period=d service="range=last_month|now,charttype=highcharts,items=HEM_E"
+			
+			Text label="3Phases Power" icon="bolt"
+			{
+			
+			Text item=HEM_P1
+			Text item=HEM_P2
+			Text item=HEM_P3
+			Chart label="Power" item=HEM_P1 period=d service="range=last_week|now,charttype=highcharts,items=HEM_P1|HEM_P2|HEM_P3"
+		
+			}
+			
+			Text label="3Phases Energy" icon="bolt"
+			{	
+			Text item=HEM_E1
+			Text item=HEM_E2
+			Text item=HEM_E3
+			Chart label="Energy" item=HEM_E1 period=d service="range=last_week|now,charttype=barcharts,stacked=true,args=deltahour,items=HEM_E1|HEM_E2|HEM_E3"
+			Chart label="Energy Debug" item=HEM_E2 period=d service="range=last_week|now,charttype=highcharts,,items=HEM_E1|HEM_E2|HEM_E3"
+			}
+			
+			Text label="3Phases Voltage" icon="bolt"
+			{
+			Text item=HEM_V1
+			Text item=HEM_V2
+			Text item=HEM_V3
+			Chart label="Voltage" item=HEM_V1 period=d service="range=last_week|now,charttype=highcharts,items=HEM_V1|HEM_V2|HEM_V3"
+			}
+			
+			Text label="3Phases Current" icon="bolt"
+			{
+			Text item=HEM_C1
+			Text item=HEM_C2
+			Text item=HEM_C3
+			Chart label="Current" item=HEM_C1 period=d service="range=last_week|now,charttype=highcharts,items=HEM_C1|HEM_C2|HEM_C3"
+			}
+			
 		}
-		Text label="Widget Overview" icon="chart" {
-			Frame label="Binary Widgets" {
-				Switch item=DemoSwitch label="Toggle Switch"
-				Switch item=DemoSwitch label="Button Switch" mappings=[ON="On"]
+		
+		Text label="Sockets" icon="th"
+		{
+		
+		Chart label="Sockets Energy (stacked)" item=ap1total period=d service="range=start_day|now,charttype=barcharts,stacked=true,args=deltahour,items=ap1total|ap2total|Zwave2b|Zwave3b|Zwave5b|Zwave7b"
+		//Chart label="Sockets Power" item=ap1power period=d service="range=start_day|now,charttype=highcharts,items=ap1power|ap2power|Zwave2a|Zwave3a|Zwave5a|Zwave6a|Zwave7a"
+		//Chart label="Sockets Daily" item=Zwave2b period=d service="range=last_week|now,charttype=barcharts,args=delta,items=ap1total|ap2total|Zwave2b|Zwave3b|Zwave5b|Zwave6b|Zwave7b"
+
+		//Chart label="Sockets Comparison (Total)" item=Zwave3b service="charttype=piecharts,items=ap1total|ap2total|Zwave2b|Zwave3b|Zwave5b|Zwave6b|Zwave7b"
+		
+		Chart label="CEO Power" item=Zwave2a service="charttype=gauge,min=0,max=400,items=Zwave2a"
+        Chart label="CTO Power" item=Zwave3a service="charttype=gauge,min=0,max=400,items=Zwave3a"
+        Chart label="Kitchen Power" item=Zwave5a service="charttype=gauge,min=0,max=3000,items=Zwave5a"	
+		
+		Text label="Exec office" icon="desktop" {
+ 		
+			Text item=ap2power labelcolor=["red"]
+			Text item=Zwave2a 
+			Text item=Zwave3a
+			
+			Text item=ap2total
+			Text item=Zwave2b  
+			Text item=Zwave3b
+			
+			
+			Chart label="Exec Office Energy" item=ap2total period=m service="range=start_day|now,charttype=barcharts,args=deltahour,stacked=true,items=ap2total|Zwave2b|Zwave3b"
+			Chart label="Exec Office Power" item=Zwave3a period=d refresh=960000 service="range=start_day|now,items=ap2power|Zwave2a|Zwave3a,charttype=highcharts"
+			Chart label="Exec Office Power" item=ap2power service="charttype=piecharts,items=ap2total|Zwave2b|Zwave3b"
+			
+			//Chart label="Exec Office Energy (Daily)" item=Zwave3b period=m service="range=last_year|now,charttype=barcharts,args=delta,items=ap2total|Zwave2b|Zwave3b"
+			//Chart label="Exec Office Energy" item=Zwave2b period=m service="range=last_day|now,charttype=highcharts,items=ap2total|Zwave2b|Zwave3b"
 			}
-			Frame label="Discrete Widgets" {
-				Selection item=Scene_General label="Scene Selection" mappings=[0=off, 1=TV, 2=Dinner, 3=Reading]
-				Switch item=Scene_General label="Scene" mappings=[1=TV, 2=Dinner, 3=Reading]
-				Setpoint item=Temperature_Setpoint minValue=16 maxValue=28 step=0.5
-			}
-			Frame label="Percent-based Widgets" {
-				Slider item=DimmedLight switchSupport
-				Colorpicker item=RGBLight icon="slider"
-				Switch item=DemoShutter
-				Slider item=DemoBlinds
-			}
+		
+		/*Text label="R&D Office" icon="desktop" {
+			//Text item=Zwave2a
+			//Text item=Zwave2b
+			//Switch item=Zwave6
+			Text item=Zwave6a
+			Text item=Zwave6b
+			
+			Chart label="R&D Office Energy" item=ap1total period=m service="range=start_day|now,charttype=barcharts,args=deltahour,items=Zwave6b"
+			//Chart label="R&D Office (Daily)" item=ap2total period=m service="range=last_year|now,charttype=barcharts,args=delta,items=Zwave6b"
+			Chart label="R&D Office Power" item=Zwave6a period=d refresh=960000 service="range=last_week|now,charttype=highcharts,items=Zwave6a"
+			
+		}*/
+		
+		Text label="Meeting Room" icon="coffee" {
+			Text item=ap1power icon="cutlery"
+			Text item=Zwave7a icon="umbrella"
+			Text item=Zwave5a icon="coffee"
+			
+			Text item=ap1total 
+			Text item=Zwave7b
+			Text item=Zwave5b
+
+			
+			Chart label="Meeting Room Energy" item=Zwave5b period=m service="range=start_day|now,charttype=barcharts,stacked=true,args=deltahour,items=ap1total|Zwave7b|Zwave5b"
+			//Chart label="Meeting Room (Daily)" item=Zwave7b period=m service="range=last_year|now,charttype=barcharts,args=delta,items=ap1total|Zwave7b|Zwave5b"
+			Chart label="Meeting Room Energy" item=Zwave5a service="charttype=piecharts,items=ap1total|Zwave7b|Zwave5b"
+			Chart label="Meeting Room Power" item=ap1power period=d refresh=960000 service="range=last_day|now,charttype=highcharts,items=ap1power|Zwave5a|Zwave7a"
+			
 		}
-		Text label="Multimedia" icon="video" {
-			Frame label="Radio Control" {
-				Selection item=Radio_Station mappings=[0=off, 1=HR3, 2=SWR3, 3=FFH]
-				Slider item=Volume
-			}
-			Frame label="Multimedia Widgets" {
-				Image url="http://localhost:8080/images/splash-ipad-h.png" label="openHAB" {
-					Text label="http://www.openHAB.org" icon="icon"
-				}
-				Video url="http://demo.openhab.org/Hue.m4v"
-				Webview url="http://heise-online.mobi/" height=8
-			}
+		
+	}	//sockets
+	
+		Text label="Climate" icon="umbrella" {
+			Text item=pw3
+			Text item=Msensor_temperature
+			Text item=Weather_Temperature
+
+			Text item=pw4
+			Text item=Msensor_humidity
+			Text item=Weather_Humidity
+					
+			Text item=Msensor_light
+			Text item=Msensor_motion
+			Text item=Msensor_battery
+
+			Chart label="Temperature" item=Weather_Temperature period=h refresh=960000 service="range=last_day|now,items=pw3|Msensor_temperature|Weather_Temperature,charttype=highcharts"			
+			Chart label="Humidity" item=Weather_Humidity period=h refresh=960000 service="range=last_day|now,items=pw4|Msensor_humidity|Weather_Humidity,charttype=highcharts"
+			Chart label="Luminosity" item=Msensor_light period=h refresh=960000 service="range=last_week|now,items=Msensor_light,charttype=highcharts"
+			//Chart label="Occupancy" item=Msensor_motion period=D refresh=960000 service="range=last_week|now,items=Msensor_motion,charttype=highcharts"
+			//Chart label="Battery" item=Msensor_battery period=h refresh=960000 service="range=last_week|now,items=Msensor_battery,charttype=highcharts"
+			 
 		}
-	}
-}
+		
+		
+		
+		Text label="Espace Solar" icon="th" {
+			
+		Chart label="Energy Today" item=Espace_336_Day_Energy period=m service="range=start_day|now,charttype=barcharts,args=deltahour,items=Espace_141_Day_Energy|Espace_401_Day_Energy|Espace_336_Day_Energy|Espace_Ypati_Day_Energy"
+		Chart label="Power Today" item=Espace_141_Current_Power period=m service="range=start_day|now,charttype=highcharts,items=Espace_141_Current_Power|Espace_401_Current_Power|Espace_336_Current_Power|Espace_Ypati_Current_Power"
+		Chart label="Energy Comparison" item=Espace_141_Day_Energy service="charttype=piecharts,items=Espace_141_Day_Energy|Espace_401_Day_Energy|Espace_336_Day_Energy|Espace_Ypati_Day_Energy"
+
+		//Chart label="Daily Power Generation" item=Espace_141_Day_Energy period=m service="range=last_month|now,charttype=barcharts,args=peakday,items=Espace_141_Day_Energy|Espace_401_Day_Energy|Espace_336_Day_Energy|Espace_Ypati_Day_Energy"
+		//Chart label="Total Power Generation" item=Espace_Ypati_Total_Energy service="charttype=piecharts,items=Espace_141_Total_Energy|Espace_401_Total_Energy|Espace_336_Total_Energy|Espace_Ypati_Total_Energy"
+		
+		
+		Group item=Espace_141  icon="bolt"
+		Group item=Espace_401  icon="bolt"
+		Group item=Espace_336  icon="bolt"
+		Group item=Espace_Ypati icon="bolt"
+		}
+		
+		
+		
+		
+		/*Text label="Ether EMM" icon="umbrella" {
+		Text item=emm_cmd
+		Text item=emm_Temperature 
+		Text item=emm_TotalEnergy
+		Text item=emm_ActivePower
+		Text item=emm_Channel1
+		Text item=emm_Channel2
+		Text item=emm_Channel3
+		Text item=emm_Channel4
+		Text item=emm_Channel5
+		Text item=emm_Channel6
+		Text item=emm_Channel7
+		Text item=emm_Channel8
+		
+		//Chart label="Emm Energy" item=emm_Channel1 period=m service="range=last_week|now,charttype=barcharts,stacked=true,items=emm_Channel1|emm_Channel2|emm_Channel3|emm_Channel4|emm_Channel5|emm_Channel6|emm_Channel7|emm_Channel8"
+		Chart label="Emm Energy" item=emm_Channel1 period=m service="range=last_week|now,charttype=highcharts,items=emm_Channel1|emm_Channel2|emm_Channel3|emm_Channel4|emm_Channel5|emm_Channel6|emm_Channel7|emm_Channel8"
+		}*/
+
+} //sitemap end

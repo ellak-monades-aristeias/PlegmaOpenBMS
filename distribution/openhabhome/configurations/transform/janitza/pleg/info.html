@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" /><script type="text/javascript">
+  CurrentLanguage = "<rep _LANGUAGE>".toLowerCase();
+  CurrentChallenge="";
+</script>
+<script type="text/javascript" src="/menu.js" ></script>
+<script type="text/javascript" src="/lib.js" ></script>
+<![if !IE]>
+<script type="text/javascript" src="/phonejs.js" language="JavaScript1.5"></script>
+<![endif]>
+<script type="text/javascript" src="/libgraph.js" ></script>
+<script type="text/javascript" src="/overlib/overlib.js"><!-- overLIB (c) Erik Bosrup --></script>
+<script type="text/javascript" src="/egg.js?time=<rep _SYSTIME>"></script>
+<script type="text/javascript" src="/lang/info.js" ></script>
+<script type="text/javascript" src="/lang/<rep _LANGUAGE>.js" encoding="utf-8"></script>
+<!-- Fallbacklanguage : -->
+<script type="text/javascript" src="/lang/de.js" encoding="utf-8"></script>
+<link type="text/css" href="css/ui-lightness/jquery-ui-1.8.12.custom.css" rel="Stylesheet" />	
+<script type="text/javascript" src="js/jquery-1.5.1.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.12.custom.min.js"></script>
+
+</head>
+
+<body>
+	<div id="page">
+		<div id="content" >
+<style>
+ /*Seitenweite Tabellenbreite */
+ .contenttable{width:400px; }
+</style>
+
+<span class="autoupdate" name="_DEV_DESC"></span> 
+<span class="autoupdate" name="_ULN[0]" ></span> 
+<span class="autoupdate" name="_ULN[0]" si="[k]"></span> 
+<span class="autoupdate" name="_ULN[0]" stellen="4"></span> 
+
+<script>
+//document.write(sysvar("_ULN[1]",2,[""],AUTOUPDATE));
+
+SysvarStellen(1);
+
+myTable = new TableHelper();
+myTable.AssignMenu( GetStdTableMenu() );
+myTable.AddRaw('<colgroup><col width=20%><col width=20%><col width=20%><col width=20%><col width=20%></colgroup>');
+myTable.NewHeader();
+myTable.AddCell("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+myTable.AddCell(tl("info.content_desc"));
+myTable.AddCell(tl("info.avg"));
+myTable.AddCell(tl("info.min"));
+myTable.AddCell(tl("info.max"));
+
+myTable.NewRow();
+myTable.AddCell(tl("L1"));
+myTable.AddCell(sysvar("_ULN[0]"));
+myTable.AddCell(sysvar("_ULN_AVG[0]"));
+myTable.AddCell(sysvar("_ULN_MIN[0]",DISPLAYTIME));
+myTable.AddCell(sysvar("_ULN_MAX[0]",DISPLAYTIME));
+
+myTable.NewRow();
+myTable.AddCell(tl("L2"));
+myTable.AddCell(sysvar("_ULN[1]"));
+myTable.AddCell(sysvar("_ULN_AVG[1]"));
+myTable.AddCell(sysvar("_ULN_MIN[1]",DISPLAYTIME));
+myTable.AddCell(sysvar("_ULN_MAX[1]",DISPLAYTIME) );
+
+myTable.NewRow();
+myTable.AddCell(tl("L3"));
+myTable.AddCell(sysvar("_ULN[2]"));
+myTable.AddCell(sysvar("_ULN_AVG[2]"));
+myTable.AddCell(sysvar("_ULN_MIN[2]",DISPLAYTIME));
+myTable.AddCell(sysvar("_ULN_MAX[2]",DISPLAYTIME) );
+
+
+myTable.NewRow();
+myTable.AddCell("<b class=\"phonefontfix\">"+tl("voltage.between.lines")+"</b>",{"colspan":"5"});
+myTable.NewRow();
+myTable.AddCell( "L1-L2" );
+myTable.AddCell(sysvar("_ULL[0]") );
+myTable.AddCell(sysvar("_ULL_AVG[0]") );
+myTable.AddCell(sysvar("_ULL_MIN[0]",DISPLAYTIME) );
+myTable.AddCell(sysvar("_ULL_MAX[0]",DISPLAYTIME) );
+
+myTable.NewRow();
+myTable.AddCell( "L2-L3" );
+myTable.AddCell( sysvar("_ULL[1]") );
+myTable.AddCell( sysvar("_ULL_AVG[1]") );
+myTable.AddCell( sysvar("_ULL_MIN[1]",DISPLAYTIME) );
+myTable.AddCell( sysvar("_ULL_MAX[1]",DISPLAYTIME) );
+
+myTable.NewRow();
+myTable.AddCell( "L3-L1" );
+myTable.AddCell( sysvar("_ULL[2]") );
+myTable.AddCell( sysvar("_ULL_AVG[2]") );
+myTable.AddCell( sysvar("_ULL_MIN[2]",DISPLAYTIME) );
+myTable.AddCell( sysvar("_ULL_MAX[2]",DISPLAYTIME) );
+
+myTable.NewRow();
+myTable.AddCell("<b class=\"phonefontfix\">"+tl("info.frequency")+"</b>",{"colspan":"5"});
+myTable.NewRow();
+myTable.AddCell(tl("info.frequency"));
+myTable.AddCell(sysvar("_freq"));
+myTable.AddCell(sysvar("_freq_avg"));
+myTable.AddCell(sysvar("_freq_min",DISPLAYTIME));
+myTable.AddCell(sysvar("_freq_max",DISPLAYTIME));
+
+document.write(myTable.flush());
+</script>
+<br>
+
+
+		</div>
+	</div>
+
+</body>
+</html>

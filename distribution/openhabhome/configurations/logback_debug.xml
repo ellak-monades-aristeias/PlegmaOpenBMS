@@ -27,26 +27,35 @@
 			<pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern>
 		</encoder>
 	</appender>
+	
+	
+	<appender name="ZFILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${openhab.logdir:-logs}/zwave.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- weekly rollover and archiving -->
+			<fileNamePattern>zwave-%d{yyyy-ww}.log.zip</fileNamePattern>
+
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
 
 	<logger name="runtime.busevents" level="INFO" additivity="false">
 		<appender-ref ref="EVENTFILE" />
 		<appender-ref ref="STDOUT" />
 	</logger>
 
-	<logger name="org.openhab" level="DEBUG" />
-	<logger name="org.openhab.binding.knx" level="DEBUG" />
-	<logger name="org.openhab.binding.onewire" level="INFO" />
-	<logger name="org.openhab.ui" level="INFO" />
-	<logger name="org.openhab.ui.webapp" level="DEBUG" />
-	<logger name="org.openhab.ui.webapp.internal.servlet" level="INFO" />
-	<logger name="org.openhab.io.net" level="INFO" />
-	<logger name="org.openhab.core.autoupdate" level="DEBUG" />
-	<logger name="org.openhab.core.persistence.internal" level="TRACE" />
-	<logger name="org.openhab.core.transform.internal.service.MapTransformationService" level="INFO" />
-	<logger name="org.openhab.binding.vdr" level="DEBUG" />
-	<logger name="org.openhab.model.core.internal.folder" level="INFO" />
-	<logger name="org.openhab.io.dropbox" level="DEBUG" />
+	<logger name="org.openhab.binding.zwave" level="TRACE" >
+	<appender-ref ref="ZFILE" />
+	<appender-ref ref="EVENTFILE" />
+	</logger>
 
+	<logger name="org.openhab" level="WARN" />
 	<logger name="OSGi" level="WARN" />
 	<logger name="org.eclipse.jetty" level="WARN" />
 	<logger name="org.drools.SystemEventListener" level="INFO" />
@@ -56,7 +65,9 @@
 		<appender-ref ref="STDOUT" />
 	</root>
 
-	<logger name="org.openhab.io.dropbox" level="DEBUG" />
+	<logger name="org.openhab.persistence.nimbits" level="TRACE" />
+	<logger name="org.openhab.binding.http" level="INFO" />
+	<logger name="org.openhab.persistence.psql" level="OFF" />
 	
 	<!-- temporary workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=402750 -->
 	<logger name="OSGi" level="OFF" />

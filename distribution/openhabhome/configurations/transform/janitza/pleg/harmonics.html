@@ -1,0 +1,427 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="imagetoolbar" content="no" />
+<meta name="MSSmartTagsPreventParsing" content="true" />
+<meta name="viewport" content="width=800" />
+<link href="/css/style-screen.css" rel="stylesheet" type="text/css" media="screen" />
+
+<script type="text/javascript">
+  CurrentLanguage = "en";
+  CurrentChallenge="";
+</script>
+
+<script type="text/javascript" src="/lib.js" ></script>
+<![if !IE]>
+<script type="text/javascript" src="/phonejs.js" language="JavaScript1.5"></script>
+<![endif]>
+<script type="text/javascript" src="/libgraph.js" ></script>
+<script type="text/javascript" src="/overlib/overlib.js"><!-- overLIB (c) Erik Bosrup --></script>
+<script type="text/javascript" src="/egg.js?time=<rep _SYSTIME>"></script>
+<script type="text/javascript" src="/lang/info.js" ></script>
+<script type="text/javascript" src="/lang/en.js" encoding="utf-8"></script>
+<script type="text/javascript" src="/lang/de.js" encoding="utf-8"></script>
+<link type="text/css" href="/css/ui-lightness/jquery-ui-1.8.12.custom.css" rel="Stylesheet" />	
+<script type="text/javascript" src="/js/jquery-1.5.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-ui-1.8.12.custom.min.js"></script>
+
+</head>
+<body>
+	<div id="page">
+
+			<div id="languagebox">
+			</div>
+
+
+		
+
+</div>
+
+<script>
+	var ID_PLAYPAUSE = 70;
+	var ID_SPEED1 = 71;
+	var ID_SPEED2 = 72;
+	var ID_SPEED3 = 73;
+
+	var IntervalTime = -1;
+	var Timer0;
+	var aktFFT = "U";
+	var aktNUM = 3;
+	var firstrun = false;
+	var gVarlist = "";
+	var gArray = new Array();
+	var proz = false; // If absolute value or % 
+	var proz_oldunit = "VV";
+
+	RegisterOnloadFunction(fftinit);
+	graph = new CGraph("graph1");
+
+	GraphMenu = new CMenu(GraphMenuCallback);
+	GraphMenuPhoneInvis = new CMenu(GraphMenuCallback);
+
+	function onGraphClick(evt) {
+		evt = (evt) ? evt : ((window.event) ? window.event : "");
+		var elem = (evt.target) ? evt.target : evt.srcElement;
+		var pos = extractMouseFromEvent(evt);
+		GraphMenu.popup(pos.x, pos.y);
+		evt.cancelBubble = true; // Stop event from bubbling
+	}
+	var GRAPH_INTERVAL_FAST = 500;
+	var GRAPH_INTERVAL_MODERATE = 1300;
+	var GRAPH_INTERVAL_SLOW = 5000;
+	var StdIntervalTime = GRAPH_INTERVAL_MODERATE;
+	function GraphMenuCallback(Item) {
+		if (Item.id == ID_PLAYPAUSE) {
+			clearTimeout(Timer0);
+			if (Item.checked) {
+				IntervalTime = -1
+			} else {
+
+				IntervalTime = StdIntervalTime;
+				if (IntervalTime != -1)
+					Timer0 = setTimeout(
+							'AjaxRequestProvider.RegisterRequest("/json.do?"+gVarList, graphcallback,"callbackParam");',
+							0);
+
+			}
+		}
+		if (Item.id >= ID_SPEED1 && Item.id <= ID_SPEED3) {
+			// Check-Item darf nicht sich selbst deaktivieren
+			if (Item.checked == false) {
+				Item.checked = true;
+				return;
+			}
+			if (!is_phone) {
+				if (Item.id == ID_SPEED1)
+					StdIntervalTime = GRAPH_INTERVAL_SLOW;
+				else
+					GraphMenu.GetItemById(ID_SPEED1).checked = false;
+
+				if (Item.id == ID_SPEED2)
+					StdIntervalTime = GRAPH_INTERVAL_MODERATE;
+				else
+					GraphMenu.GetItemById(ID_SPEED2).checked = false;
+
+				if (Item.id == ID_SPEED3)
+					StdIntervalTime = GRAPH_INTERVAL_FAST;
+				else
+					GraphMenu.GetItemById(ID_SPEED3).checked = false;
+			} else {
+
+				if (Item.id == ID_SPEED1)
+					StdIntervalTime = GRAPH_INTERVAL_SLOW;
+				else
+					GraphMenuPhoneInvis.GetItemById(ID_SPEED1).checked = false;
+
+				if (Item.id == ID_SPEED2)
+					StdIntervalTime = GRAPH_INTERVAL_MODERATE;
+				else
+					GraphMenuPhoneInvis.GetItemById(ID_SPEED2).checked = false;
+
+				if (Item.id == ID_SPEED3)
+					StdIntervalTime = GRAPH_INTERVAL_FAST;
+				else
+					GraphMenuPhoneInvis.GetItemById(ID_SPEED3).checked = false;
+			}
+			if (IntervalTime != -1) {
+				clearTimeout(Timer0);
+				IntervalTime = StdIntervalTime;
+				Timer0 = setTimeout(
+						'AjaxRequestProvider.RegisterRequest("/json.do?"+gVarList, graphcallback,"callbackParam");',
+						0);
+			}
+		}
+		if (Item.id == ID_DELMIN && aktFFT == "U") {
+			AjaxRequestProvider.RegisterRequest("dummy.html?_FFT_UL" + aktNUM
+					+ "_MIN[0..34]=" + UMG_MAX_INT, null, null);
+		}
+		if (Item.id == ID_DELMAX) {
+			var prefix = "";
+			if (aktFFT == "U") {
+				prefix = "_FFT_UL" + aktNUM;
+				AjaxRequestProvider.RegisterRequest("dummy.html?" + prefix
+						+ "_MAX[0..34]=0", null, null);
+			}
+			if (aktFFT == "I") {
+				if (aktNUM <= 4) {
+					prefix = "_FFT_IL" + aktNUM;
+					AjaxRequestProvider.RegisterRequest("dummy.html?" + prefix
+							+ "_MAX[0..34]=0", null, null);
+				} else {
+					aktNUM = aktNUM - 4;
+					prefix = "_FFT_DIFF" + aktNUM;
+				}
+			}
+		}
+
+	}
+	function fftinit() {
+		document.getElementById("selfft").selectedIndex = 0;
+		graph.SetBackground("black");
+		graph.SetYAxis("Spannung", "V", 0, 0.05);
+		graph.SetYAxisMarkerFac(10/*Kleine*/, 5/*Gro?e*/);
+		graph.SetXAxis("", "", 1, 35);
+		graph.SetXAxisMarkerFac(0/*Kleine*/, 35/*Gro?e*/);
+		graph.Init();
+
+		graph.el.onclick = onGraphClick;
+		document.getElementById("proz").checked = proz;
+		selectfft("U", 1);
+		AjaxRequestProvider.RegisterRequest("/json.do?" + gVarList,
+				graphcallback, "callbackParam");
+		if (!is_phone) {
+			GraphMenu.AddCheck(ID_PLAYPAUSE, [ tl("graph.play"),
+					tl("graph.stop") ], true, [ "img/menu_play.png",
+					"img/menu_pause.png" ]);
+			GraphMenu.AddSeperator();
+			GraphMenu.AddCheck(ID_SPEED1, tl("graph.speed1"), true);
+
+			GraphMenu.AddCheck(ID_SPEED2, tl("graph.speed2"), false);
+			GraphMenu.AddCheck(ID_SPEED3, tl("graph.speed3"), false);
+			GraphMenu.AddSeperator();
+		} else {
+			GraphMenuPhoneInvis.AddCheck(ID_PLAYPAUSE, [ tl("graph.play"),
+					tl("graph.stop") ], true, [ "img/menu_play.png",
+					"img/menu_pause.png" ]);
+			GraphMenuPhoneInvis.AddCheck(ID_SPEED1, tl("graph.speed1"), true);
+			GraphMenuPhoneInvis.AddCheck(ID_SPEED2, tl("graph.speed2"), false);
+			GraphMenuPhoneInvis.AddCheck(ID_SPEED3, tl("graph.speed3"), false);
+		}
+		GraphMenu.AddButton(ID_DELMAX, tl("cmenu.delmax"), "img/menu_max.png");
+
+	}
+
+	function updategraph() {
+		clearTimeout(Timer0);
+		//GraphMenu.GetItemById(ID_PLAYPAUSE).checked=true;
+		var selel = document.getElementById("selfft");
+
+		var selfftOrg = selel.options[selel.selectedIndex].value;
+		var selfft = selfftOrg.split(/|/)[0];
+		var num = selfftOrg.split(/|/)[2];
+
+		proz = document.getElementById("proz").checked;
+
+		selectfft(selfft, num);
+		AjaxRequestProvider.RegisterRequest("/json.do?" + gVarList,
+				graphcallback, "callbackParam");
+	}
+	function graphcallback(responseText, callbParam) {
+
+		Response.parse(responseText);
+
+		document.getElementById("firstvalue").innerHTML = tlnum(Math.runde(
+				parseFloat(Response.get(gArray[tl("info.value")], 0)), 2))
+				+ " " + Response.unit(gArray[tl("info.value")], 0);
+
+		if (proz) {
+			for (x in gArray) {
+				if (x in Array.prototype)
+					continue;
+				var absolute = Response.value(gArray[x], 0);
+
+				for ( var i = 1; i < 35; i++) {
+					var aktVal = Response.value(gArray[x], i);
+					var newVal = Math.frunde(aktVal / absolute * 100, 2);
+					Response.set(gArray[x], i, newVal);
+					Response.set(gArray[x], i, "UNIT%");
+				}
+			}
+		}
+		if (firstrun == true) {
+			if (aktFFT == "U")
+				graph.SetYAxis(NOP, NOP, NOP, Math.frunde(Response.Max(
+						gArray[tl("info.max")], 1, 35) * 1.05, 2));
+			else if (aktFFT == "I") {
+				if (aktNUM <= 4) {
+					graph.SetYAxis(NOP, NOP, 0, Math.frunde(Response.Max(
+							gArray[tl("info.max")], 1, 35) * 1.10, 3));
+				} else {
+					graph.SetYAxis(NOP, NOP, 0, Math.frunde(Response.Max(
+							gArray[tl("info.value")], 1, 35) * 1.10, 3));
+					
+				}
+			}
+
+			graph.SetYAxisMarkerFac(10/*Kleine*/, 5/*Gro?e*/);
+			graph.UpdateYAxis();
+			firstrun = false;
+		}
+		var s = "";
+
+		for ( var i = 0; i < 35; i++) {
+			//OLDif(i==0 && aktFFT == "U") continue;
+			for (x in gArray) {
+				if (x in Array.prototype)
+					continue;
+
+				if (i == 0 && proz)
+					graph.setYAxisUnit(proz_oldunit);
+				
+				graph.UpdateBar(i, x, Response.value(gArray[x], i), ""); // addalt);
+				if (i == 0 && proz)
+					graph.setYAxisUnit("%");
+
+			}
+
+		}
+
+		if (IntervalTime != -1)
+			Timer0 = setTimeout(
+					'AjaxRequestProvider.RegisterRequest("/json.do?"+gVarList, graphcallback,"callbackParam");',
+					IntervalTime);
+
+		delete responseText;
+	}
+
+	function selectfft(s, num) {
+		aktFFT = s;
+		aktNUM = num;
+		graph.ClearBars();
+
+		switch (s) {
+		case "U": {
+			proz_oldunit = "V";
+			graph.SetYAxis(GraphImage("img/graph.voltage.<rep _LANGUAGE>.png"),
+					(proz) ? "%" : "V", 0, 5);
+			graph.SetYAxisMarkerFac(10/*Kleine*/, 5/*Gro?e*/);
+			graph.UpdateYAxis();
+			graph.CreateDynBars(35, tl("info.max"), "#FFCD63", "#FFB663");
+			graph.CreateDynBars(35, tl("info.value"), "#FFF763", "#FFD863");
+			gArray = new Array();
+			gArray[tl("info.max")] = "_FFT_UL" + num + "_MAX";
+			gArray[tl("info.value")] = "_FFT_UL" + num;
+			gVarList = "_FFT_UL" + num + "[0..34],_FFT_UL" + num
+					+ "_MAX[0..34]";
+			break;
+		}
+		case "I": {
+			proz_oldunit = "A";
+			gArray = new Array();
+			if (num <= 4) {
+				graph.SetYAxis(GraphImage("img/graph.current.<rep _LANGUAGE>.png"),(proz) ? "%" : "A", 0, 0.05);
+				graph.SetYAxisMarkerFac(10/*Kleine*/, 5/*Gro?e*/);
+				graph.UpdateYAxis();
+				graph.CreateDynBars(35, tl("info.max"), "#FFCD63", "#FFB663");
+				graph.CreateDynBars(35, tl("info.value"), "#FFF763", "#FFD863");
+				gArray[tl("info.max")] = "_FFT_IL" + num + "_MAX";
+				gArray[tl("info.value")] = "_FFT_IL" + num;
+				gVarList = "_FFT_IL" + num + "[0..34],_FFT_IL" + num
+						+ "_MAX[0..34]";
+			} else {
+				graph.SetYAxis(GraphImage("img/graph.current.<rep _LANGUAGE>.png"),(proz) ? "%" : "A", 0, 0.005);
+				graph.SetYAxisMarkerFac(10/*Kleine*/, 5/*Gro?e*/);
+				graph.UpdateYAxis();
+				graph.CreateDynBars(35, tl("info.avg"), "#FFCD63", "#FFB663");
+				graph.CreateDynBars(35, tl("info.value"), "#FFF763", "#FFD863");
+				num = num - 4;
+				gArray[tl("info.avg")] = "_FFT_DIFF" + num + "_AVG";
+				gArray[tl("info.value")] = "_FFT_DIFF" + num;
+				gVarList = "_FFT_DIFF" + num + "[0..34],_FFT_DIFF" + num
+						+ "_AVG[0..34]";
+
+			}
+			break;
+		}
+		}
+		firstrun = true;
+	}
+
+	function DelMinMaxAvg() {
+		var obj = document.getElementById("seldel");
+		var what = obj.options[obj.selectedIndex].value;
+		var url = "dummy.html?" + gArray[what] + "[0..34]="
+				+ ((what == "Min") ? UMG_MAX_INT : "0");
+		AjaxRequestProvider.RegisterRequest(url, null, null);
+	}
+
+	var idd = 1
+	function phone_ch_freq() {
+		var list = [ tl("graph.speed1"), tl("graph.speed2"), tl("graph.speed3") ];
+		var listcss = [ "frq_button_slow", "frq_button_mod", "frq_button_fast" ]
+		var listID = [ ID_SPEED1, ID_SPEED2, ID_SPEED3 ]
+		removeStyleClass(ById("phone_fft_freq"), listcss[idd]);
+		idd++
+		if (idd == 3)
+			idd = 0;
+		item = GraphMenuPhoneInvis.GetItemById(listID[idd]);
+		GraphMenuCallback(item) // Get things done
+		ById("phone_fft_freq").innerHTML = list[idd];
+		addStyleClass(ById("phone_fft_freq"), listcss[idd]);
+
+	}
+	function phone_playpause() {
+		CloseAllCMenus();
+		item = GraphMenuPhoneInvis.GetItemById(ID_PLAYPAUSE);
+		item.checked = !item.checked; //Toggle;
+		GraphMenuCallback(item) // Get things done
+		//Update Phone UI
+		if (item.checked) {
+			ById("phone_playpause").innerHTML = tl("graph.play")
+			removeStyleClass(ById("phone_playpause"), "pb_active");
+		} else {
+			ById("phone_playpause").innerHTML = tl("graph.stop")
+			addStyleClass(ById("phone_playpause"), "pb_active");
+		}
+
+	}
+</script>
+<style type="text/css">
+.frq_button {
+	-webkit-transition: color 1s ease-in-out;
+}
+
+.frq_button_slow {
+	color: rgb(129, 255, 91) !important;
+}
+
+.frq_button_mod {
+	color: rgb(255, 202, 91) !important;
+}
+
+.frq_button_fast {
+	color: rgb(255, 91, 91) !important;
+}
+</style>
+<img src="/iui/blueButton.png" style="display: none;" id="prefetchblue">
+<div id="overDiv"
+	style="position: absolute; visibility: hidden; z-index: 1000;"></div>
+<div class="showifphone"
+	style="display: none; position: relative; height: 40px">
+	<a id="phone_playpause" href="javascript:void(0)" class="phonebutton"
+		style="font-size: 23px; position: absolute; left: 0px"
+		onclick="phone_playpause()"><span class="trans">graph.play</span>
+	</a> <a id="phone_fft_freq" href="javascript:void(0)"
+		class="phonebutton frq_button frq_button_mod"
+		style="font-size: 23px; display: block; width: 120px; text-align: center; position: absolute; left: 160px"
+		onclick="phone_ch_freq()"><span class="trans">graph.speed2</span>
+	</a>
+</div>
+<div class="hideifphone">
+	<br>
+</div>
+<div id="graph1"
+	style="width: 530px; height: 300px; position: relative; border: thin gray solid;">
+	<span id="firstvalue"
+		style="position: absolute; right: 0px; bottom: 10px;"></span>
+</div>
+
+<div
+	style="border: 1px #AAAAAA solid; background: #DADADA; padding: 1px 4px 4px 4px; width: 526px;">
+	<select id="selfft" class="trans" onchange="updategraph(this)">
+		<option value="U|1">menu.voltage1</option>
+		<option value="U|2">menu.voltage2</option>
+		<option value="U|3">menu.voltage3</option>
+		<option value="I|1">menu.current1</option>
+		<option value="I|2">menu.current2</option>
+		<option value="I|3">menu.current3</option>
+		<option value="I|4">menu.current4</option>
+		<option value="I|5">menu.current5</option>
+		<option value="I|6">menu.current6</option>
+	</select> <span style="width: 41px"> </span> <input id="proz" type="checkbox"
+		onchange="updategraph(this)"><span class="trans">info.percental</span>
+</div>
+
+</body>
+</html>

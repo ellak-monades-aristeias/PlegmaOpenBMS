@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="imagetoolbar" content="no" />
+<meta name="MSSmartTagsPreventParsing" content="true" />
+<meta name="viewport" content="width=800" />
+<link href="/css/style-screen.css" rel="stylesheet" type="text/css" media="screen" />
+
+<script type="text/javascript">
+  CurrentLanguage = "en";
+  CurrentChallenge="";
+</script>
+
+<script type="text/javascript" src="/lib.js" ></script>
+<![if !IE]>
+<script type="text/javascript" src="/phonejs.js" language="JavaScript1.5"></script>
+<![endif]>
+<script type="text/javascript" src="/overlib/overlib.js"><!-- overLIB (c) Erik Bosrup --></script>
+<script type="text/javascript" src="/lang/info.js" ></script>
+<script type="text/javascript" src="/lang/en.js" encoding="utf-8"></script>
+<script type="text/javascript" src="/lang/de.js" encoding="utf-8"></script>
+<link type="text/css" href="/css/ui-lightness/jquery-ui-1.8.12.custom.css" rel="Stylesheet" />	
+<script type="text/javascript" src="/js/jquery-1.5.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-ui-1.8.12.custom.min.js"></script>
+
+</head>
+<body>
+	<div id="page">
+
+			<div id="languagebox">
+			</div>
+
+
+		
+
+</div>
+ 
+<h3><span class="trans">menu.current</span></h3>
+<script>
+myTable = new TableHelper();
+myTable.AssignMenu( GetStdTableMenu() );
+myTable.AddRaw('<colgroup><col width=20%><col width=20%><col width=20%><col width=20%><col width=20%></colgroup>');
+myTable.NewHeader();
+myTable.AddCell("&nbsp;");
+myTable.AddCell(tl("info.content_desc"));
+myTable.AddCell(tl("info.avg"));
+myTable.AddCell(tl("info.avgmax"));
+myTable.AddCell(tl("info.max"));
+
+myTable.NewRow();
+myTable.AddCell(tl("L1"));
+myTable.AddCell( sysvar("_ILN[0]") );
+myTable.AddCell( sysvar("_ILN_AVG[0]") );
+myTable.AddCell( sysvar("_ILN_AVG_MAX[0]", DISPLAYTIME) );
+myTable.AddCell( sysvar("_ILN_MAX[0]",DISPLAYTIME) );
+myTable.NewRow();
+myTable.AddCell(tl("L2"));
+myTable.AddCell( sysvar("_ILN[1]") );
+myTable.AddCell( sysvar("_ILN_AVG[1]") );
+myTable.AddCell( sysvar("_ILN_AVG_MAX[1]",DISPLAYTIME) );
+myTable.AddCell( sysvar("_ILN_MAX[1]",DISPLAYTIME) );
+
+
+myTable.NewRow();
+myTable.AddCell(tl("L3"));
+myTable.AddCell( sysvar("_ILN[2]") );
+myTable.AddCell( sysvar("_ILN_AVG[2]") );
+myTable.AddCell( sysvar("_ILN_AVG_MAX[2]",DISPLAYTIME) );
+myTable.AddCell( sysvar("_ILN_MAX[2]",DISPLAYTIME) );
+
+myTable.NewRow();
+myTable.AddCell(tl("L4noAUX"));
+myTable.AddCell( sysvar("_iln4") );
+myTable.AddCell( sysvar("_iln4_AVG") );
+myTable.AddCell( sysvar("_iln4_AVG_MAX",DISPLAYTIME) );
+myTable.AddCell( sysvar("_iln4_MAX",DISPLAYTIME) );
+
+myTable.NewRow();
+myTable.AddCell(tl("DIFF1"));
+myTable.AddCell( sysvar("_i_diff1",3) );
+myTable.AddCell( sysvar("_i_diff1_AVG",3) );
+myTable.AddCell( sysvar("_i_diff1_MAX",3,DISPLAYTIME) );
+myTable.AddCell( sysvar("_i_diff1_MAX",3,DISPLAYTIME) );
+
+myTable.NewRow();
+myTable.AddCell(tl("DIFF2"));
+myTable.AddCell( sysvar("_i_diff2",3) );
+myTable.AddCell( sysvar("_i_diff2_AVG",3) );
+myTable.AddCell( sysvar("_i_diff2_MAX",3,DISPLAYTIME) );
+myTable.AddCell( sysvar("_i_diff2_MAX",3,DISPLAYTIME) );
+
+document.write(myTable.flush());
+</script>
+
+
+</body>
+</html>

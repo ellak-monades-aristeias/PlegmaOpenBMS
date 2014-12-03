@@ -1,0 +1,26 @@
+/*sitemap solar label="Plegma Labs"
+{
+
+		Text label="Espace Power Plants" icon="th" {
+			
+		Chart label="Todays Power Generation" item=Espace_336_Day_Energy period=m service="range=start_day|now,charttype=barcharts,args=deltahour,items=Espace_141_Day_Energy|Espace_401_Day_Energy|Espace_336_Day_Energy|Espace_Ypati_Day_Energy"
+		Chart label="Todays Power Generation Distribution" item=Espace_141_Day_Energy service="charttype=piecharts,items=Espace_141_Day_Energy|Espace_401_Day_Energy|Espace_336_Day_Energy|Espace_Ypati_Day_Energy"
+
+		Chart label="Daily Power Generation" item=Espace_141_Day_Energy period=m service="range=last_month|now,charttype=barcharts,args=peakday,items=Espace_141_Day_Energy|Espace_401_Day_Energy|Espace_336_Day_Energy|Espace_Ypati_Day_Energy"
+		Chart label="Total Power Generation" item=Espace_Ypati_Total_Energy service="charttype=piecharts,items=Espace_141_Total_Energy|Espace_401_Total_Energy|Espace_336_Total_Energy|Espace_Ypati_Total_Energy"
+		Chart label="Todays Active Power" item=Espace_141_Current_Power period=m service="range=start_day|now,charttype=highcharts,items=Espace_141_Current_Power|Espace_401_Current_Power|Espace_336_Current_Power|Espace_Ypati_Current_Power"
+		
+		
+		Group item=Espace_141  icon="bolt"
+		Group item=Espace_401  icon="bolt"
+		Group item=Espace_336  icon="bolt"
+		Group item=Espace_Ypati icon="bolt"
+		}
+		
+		Text label="Map" icon="road" {
+			Text 
+        }
+
+} //sitemap end
+
+*/

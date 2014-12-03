@@ -1,162 +1,224 @@
 import org.openhab.core.library.types.*
 import org.openhab.core.persistence.*
 import org.openhab.model.script.actions.*
+import org.joda.time.*
 
-var Number counter = 1
-var Timer timer = null
+var Timer powerstattimer1
+var Timer powerstattimer2
+var Timer zwaveAlertTimer
 
-/**
- * This is a demo rule which simulates a real dimmer by reacting to increase/decrease commands 
- * and posting an updated state on the bus 
- */
-rule "Dimmed Light"
-	when
-		Item DimmedLight received command
-	then
-		var Number percent = 0
-		if(DimmedLight.state instanceof DecimalType) percent = DimmedLight.state as DecimalType 
-			
-		if(receivedCommand==INCREASE) percent = percent + 5
-		if(receivedCommand==DECREASE) percent = percent - 5
-
-		if(percent<0)   percent = 0
-		if(percent>100) percent = 100
-		postUpdate(DimmedLight, percent);
+rule Startup
+when 
+	System started
+then
+	logInfo("Startup called","Welcome at Plegma demo!!")
+	//sendMail("mn@pleg.ma", "test","body")
 end
 
-/**
- * This rule demonstrates how a NumberItem can be used to easily control the local sound system.
- * A selection widget in the UI provides easy access for this
- */
-rule "Select Radio Station"
-	when
-		Item Radio_Station received command
-	then
-		switch(receivedCommand) {
-			case 0 : playStream(null)
-			case 1 : playStream("http://metafiles.gl-systemhaus.de/hr/hr3_2.m3u")
-			case 2 : playStream("http://mp3-live.swr3.de/swr3_m.m3u")
-			case 3 : playStream("http://edge.live.mp3.mdn.newmedia.nacamar.net/radioffh/livestream.mp3.m3u")
-		}
+rule Goodbye
+when 
+	System shuts down
+then
+	logInfo("Goodbye called","Goodbye from Plegma demo!!")
 end
 
-/**
- * This rules controls the volume on the local host
- */
-rule "Volume control"
-	when
-		Item Volume received command
-	then
-		if(receivedCommand instanceof PercentType) {
-			setMasterVolume(receivedCommand as PercentType)
-		} else {
-			if(receivedCommand==INCREASE) increaseMasterVolume(20)
-			if(receivedCommand==DECREASE) decreaseMasterVolume(20)	
-		}
-		postUpdate(Volume, masterVolume * 100)
-end
 
-/**
- * The following rules help initializing the demo items with some helpful states.
- */
-rule "Initialize light states"
-	when
-		System started
-	then
-		Lights?.members.forEach(light|
-			postUpdate(light, if(Math::random > 0.7) ON else OFF)
-		)
-end
-
-rule "Initialize heating states"
+/* 
+rule "koukos"
 	when 
-		System started
+		Time cron "0 0 * * * ?"
 	then
-		Heating?.members.forEach(heating|
-			postUpdate(heating, if(Math::random > 0.8) ON else OFF)
-		)
-		postUpdate(Temperature_Setpoint, 22)
+		say("  it is" + now.toString("h")+ " O clock at Plegma !! ")
 end
 
-rule "Initialize contact states"
-	when 
-		System started
-	then
-		Windows?.members.forEach(window|
-			postUpdate(window, if(Math::random > 0.5) OPEN else CLOSED)
-		)
-end
 
-rule "Set random room temperatures"
+rule "Log temperature on update"
 	when 
-		System started or
-		Time cron "0 0/5 * * * ?"
+		Item Weather_Temperature received update
 	then
-		Temperature?.members.forEach(temperature|
-			postUpdate(temperature, 20.0 + (25.0 - (Math::random * 50.0).intValue) / 10.0)
-		)
-end
+		logInfo("mylogtemp","The temperature in Athens is " + Weather_Temperature.state.format("%d") + " degrees celsius")
+end 
 
 rule "Update max and min temperatures"
 when
-	Item Weather_Temperature changed or
+	Item Weather_Temperature changed or 
 	Time cron "0 0 0 * * ?" or
 	System started
+	
 then	
 	postUpdate(Weather_Temp_Max, Weather_Temperature.maximumSince(now.toDateMidnight).state)
 	postUpdate(Weather_Temp_Min, Weather_Temperature.minimumSince(now.toDateMidnight).state)
-end
+end*/
 
-/** shows how to use sensor values from the past */
-rule "Persistence Demo"
+
+/*
+rule "send alert"
+when 
+  Item SolarTemp1 received update
+  then
+  if (Weather_Temperature.state > 10){
+  sendMail("mn@pleg.ma", "test 10","body") }
+
+end
+  */
+ 
+
+
+
+
+/** calculate daily consumption 
+rule "powerstats"
 when
-	Time cron "0 * * * * ?"
+	Item janitza_totalenergy received update
 then	
-	if(Weather_Temperature.changedSince(now.minusMinutes(1))) {
-		println("2 minutes ago, the temperature was " + Weather_Temperature.historicState(now.minusMinutes(2)) + " degrees.")		
+
+logInfo( "rules.powerstats", "starting..")
+
+var Number totalPower = janitza_totalenergy.state as DecimalType
+
+var Number avToday = (janitza_power.averageSince(now.minusHours(now.getHourOfDay))/1000).intValue
+var Number avMonth = (janitza_power.averageSince(now.minusDays(now.getDayOfMonth()))/1000).intValue
+var Number avTotal = (janitza_power.averageSince(now.minusDays(now.getDayOfYear))/1000).intValue
+
+var Number eToday = totalPower - janitza_totalenergy.historicState(now.minusHours(now.getHourOfDay)).state as DecimalType
+var Number eYesterday = totalPower - janitza_totalenergy.historicState(now.minusHours(now.getHourOfDay).minusDays(1)).state as DecimalType
+var Number avYesterday = ((eYesterday - eToday)/24).intValue
+
+
+if(janitza_totalenergy.historicState(now.minusDays(now.getDayOfMonth())) !=null){
+	var Number eMonth = totalPower - janitza_totalenergy.historicState(now.minusDays(now.getDayOfMonth())).state as DecimalType
+	postUpdate( Energy_used_month, eMonth  )
+}
+postUpdate( Energy_used_today, eToday  )
+postUpdate( AvPower_today, avToday  )
+postUpdate( AvPower_yesterday, avYesterday )
+postUpdate( AvPower_month, avMonth  )
+postUpdate( AvPower_total, avTotal  )
+
+logInfo( "rules.powerstats", "finished..")
+end
+*/
+
+
+/*
+// calculate daily consumption 
+
+rule "powerstats"
+when
+	Item HEM_E1 received update
+	or Item HEM_E2 received update
+	or Item HEM_E3 received update
+then	
+
+	logInfo( "rules.powerstats", "starting..")
+	if( HEM_P1.state >=0 && HEM_P2.state >=0 && HEM_P3.state >=0){
+		var Number totalPower = HEM_P1.state as DecimalType + HEM_P2.state as DecimalType + HEM_P3.state as DecimalType
+		totalPower = totalPower/1000 
+		if (totalPower >=0) {
+			postUpdate( HEM_P, totalPower )
+			
+			if(powerstattimer1==null || powerstattimer1.hasTerminated){
+				HEM_P.persist
+				powerstattimer1 = createTimer(now.plusMinutes(1))[|]
+        	}else {
+        		logWarn( "powerstattimer","did not persist HEM_P cause timer is still running")
+        	}
+			
+		} else logWarn( "powerstats","totalPower calculation error 1")
+	} else logWarn( "powerstats","totalPower calculation error 2")
+	
+	if( HEM_E1.state >=0 && HEM_E2.state >=0 && HEM_E3.state >=0){		
+		var Number totalEnergy = HEM_E1.state as DecimalType + HEM_E2.state as DecimalType + HEM_E3.state as DecimalType 
+		if (totalEnergy >=0) {
+			postUpdate( HEM_E, totalEnergy )
+			if(powerstattimer2==null || powerstattimer2.hasTerminated){
+				HEM_E.persist
+				powerstattimer2 = createTimer(now.plusMinutes(1))[|]
+        	}else {
+        		logWarn( "powerstattimer","did not persist HEM_E cause timer is still running")
+        	}
+		} 
+	}
+
+logInfo( "powerstats", "finished..")
+end
+
+
+rule "voltstats"
+	when
+		Item HEM_V1 received update
+		or Item HEM_V2 received update
+		or Item HEM_V3 received update
+	then	
+
+	if( HEM_V1.state >=0 && HEM_V2.state >=0 && HEM_V3.state >=0){	
+		var Number avgVoltage = (HEM_V1.state as DecimalType + HEM_V2.state as DecimalType + HEM_V3.state as DecimalType) /3 
+		if (avgVoltage >=0) {
+			postUpdate( HEM_V, avgVoltage )
+		} 
 	}
 end
 
-/** 
- * shows how to check recent switch states - very helpful to avoid executing something too often, just
- * because somebody presses a button too often (e.g. sending a notification, if the doorbell button is pressed)
- */
-rule "Persistence Demo 2"
-when
-	Item DemoSwitch received command
-then
-	if(!DemoSwitch.changedSince(now.minusSeconds(5))) {
-		logInfo("Persistence Demo", "You did not press this button during the last 5 seconds!")
+rule "currentstats"
+	when
+		Item HEM_C1 received update
+		or Item HEM_C2 received update
+		or Item HEM_C3 received update
+	then	
+	 
+	if( HEM_C1.state >=0 && HEM_C2.state >=0 && HEM_C3.state >=0){
+	var Number totalCurrent = HEM_C1.state as DecimalType + HEM_C2.state as DecimalType + HEM_C3.state as DecimalType 
+		if (totalCurrent >=0) postUpdate( HEM_C, totalCurrent )
 	}
 end
 
-rule "Timer Demo"
-when
-	Item Light_GF_Corridor_Ceiling received command
-then
-	if(receivedCommand==ON) {
-		if(timer==null) {
-			// first ON command, so create a timer to turn the light off again
-			timer = createTimer(now.plusSeconds(10)) [|
-				sendCommand(Light_GF_Corridor_Ceiling, OFF)
-			]
-		} else {
-			// subsequent ON command, so reschedule the existing timer
-			timer.reschedule(now.plusSeconds(10))
-		}
-	} else if(receivedCommand==OFF) {
-		// remove any previously scheduled timer
-		if(timer!=null) {
-			timer.cancel
-			timer = null
-		}	
-	}
+
+*/
+
+
+
+
+
+/*
+
+rule "emmSocketRule"
+
+     when 
+            Time cron "0 * * * * ?" //every minute
+     then
+            sendCommand(emm_cmd, "Temperature")
+            postUpdate(emm_Temperature, new Float(emm_cmd.state.toString()))
+            emm_Temperature.persist
+            sendCommand(emm_cmd, "Total Energy")
+            postUpdate(emm_TotalEnergy, new Float(emm_cmd.state.toString()))
+            emm_TotalEnergy.persist
+            sendCommand(emm_cmd, "Active Power")
+            postUpdate(emm_ActivePower, new Float(emm_cmd.state.toString()))
+            emm_ActivePower.persist
+            sendCommand(emm_cmd, "Channel1")
+            postUpdate(emm_Channel1, new Float(emm_cmd.state.toString()))
+            emm_Channel1.persist
+            sendCommand(emm_cmd, "Channel2")
+            postUpdate(emm_Channel2, new Float(emm_cmd.state.toString()))
+            emm_Channel2.persist
+            sendCommand(emm_cmd, "Channel3")
+            postUpdate(emm_Channel3, new Float(emm_cmd.state.toString()))
+            emm_Channel3.persist
+            sendCommand(emm_cmd, "Channel4")
+            postUpdate(emm_Channel4, new Float(emm_cmd.state.toString()))
+            emm_Channel4.persist
+            sendCommand(emm_cmd, "Channel5")
+            postUpdate(emm_Channel5, new Float(emm_cmd.state.toString()))
+            emm_Channel5.persist
+            sendCommand(emm_cmd, "Channel6")
+            postUpdate(emm_Channel6, new Float(emm_cmd.state.toString()))
+            emm_Channel6.persist
+            sendCommand(emm_cmd, "Channel7")
+            postUpdate(emm_Channel7, new Float(emm_cmd.state.toString()))
+            emm_Channel7.persist
+            sendCommand(emm_cmd, "Channel8")
+            postUpdate(emm_Channel8, new Float(emm_cmd.state.toString()))
+            emm_Channel8.persist
 end
 
-// Creates an item that stores the last update time of this item
-rule "Records last weather update time"
-when
-  Item Weather_Temperature received update
-then
-  postUpdate(Weather_LastUpdate, new DateTimeType())
-end
+*/
