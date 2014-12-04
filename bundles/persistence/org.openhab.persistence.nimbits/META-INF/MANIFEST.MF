@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: openHAB nimbits Persistence bundle
+Bundle-SymbolicName: org.openhab.persistence.nimbits;singleton:=true
+Bundle-Version: 1.5.1
+Bundle-Vendor: openHAB.org
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.apache.commons.lang,
+ org.openhab.core.items,
+ org.openhab.core.library.items,
+ org.openhab.core.library.types,
+ org.openhab.core.persistence,
+ org.openhab.core.types,
+ org.osgi.framework,
+ org.osgi.service.cm,
+ org.osgi.service.event,
+ org.slf4j
+Bundle-ClassPath: .,
+ lib/nimbits_io-1.0-SNAPSHOT.jar,
+ lib/nimbits_model-1.0-SNAPSHOT.jar,
+ lib/commons-lang3-3.1.jar,
+ lib/gson-2.2.2.jar,
+ lib/httpclient-4.2.2.jar,
+ lib/httpcore-4.2.2.jar,
+ lib/commons-logging-1.1.1.jar
+Service-Component: OSGI-INF/nimbits.xml
+Bundle-Activator: org.openhab.persistence.nimbits.internal.NimbitsPersistenceServiceActivator
