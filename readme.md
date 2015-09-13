@@ -5,9 +5,9 @@ Enterprises today more than ever require detailed monitoring and control of thei
 We consider this an important business opportunity which can be addressed with a cost-efficient fully open-source approach, transforming the way traditional BEMS technology is installed and used, but also changing the business model of the BEMS industry from CAPEX-intense & licence based to a reasonable subscription/services OPEX model.  We envision an open-source BEMS that can become "**wordpress for buildings**" and develop an ecosystem around it of small companies / freelancers who will deploy and maintain it for their customers. 
 
 ##Plegma OpenBMS##
-![](wiki/screenshot.png)
+![](https://raw.githubusercontent.com/wiki/ellak-monades-aristeias/PlegmaOpenBMS/screenshot.png)
 
-Our Building Energy Monitoring System is based on a popular smart-home/IoT integration platform known as [OpenHab](http://openhab.org) which is developed in Java/OSGi technology and is designed to be absolutely vendor-neutral as well as hardware/protocol agnostic. We have developed additional modules (bindings) in order to extent the functionality of OpenHab towards a Building Energy Monitoring System.  [Please visit our Wiki for more details.](wiki)
+Our Building Energy Monitoring System is based on a popular smart-home/IoT integration platform known as [OpenHab](http://openhab.org) which is developed in Java/OSGi technology and is designed to be absolutely vendor-neutral as well as hardware/protocol agnostic. We have developed additional modules (bindings) in order to extent the functionality of OpenHab towards a Building Energy Monitoring System.  [Please visit our Wiki for more details.](https://github.com/ellak-monades-aristeias/PlegmaOpenBMS/wiki)
 
 ## License##
 All source code is under Eclipse Public License (EPL). Wiki and readme files are CC-BY-SA 4.0 
