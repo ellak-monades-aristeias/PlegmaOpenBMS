@@ -1,0 +1,3 @@
+[submodule "PlegmaOpenBMS.wiki"]
+	path = PlegmaOpenBMS.wiki
+	url = https://github.com/ellak-monades-aristeias/PlegmaOpenBMS.wiki.git
