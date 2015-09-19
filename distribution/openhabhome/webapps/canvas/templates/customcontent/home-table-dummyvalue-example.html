@@ -1,0 +1,76 @@
+<div id="content">
+
+    <div id="content-header">
+        <h1>{{title}}</h1>
+    </div> <!-- #content-header -->
+
+
+    <div id="content-container">
+
+        <!--
+                Check the difference in this case in the arguments of plegma-single-value.
+                You should NOT have widget attribute, but only the itemid
+                below is the syntax for a row.
+                the values of col-mid-* and col-sm-* you have in the divs should sum up to 12
+                in the case below we want to have 3 items in one row, so 12/3=4, therefore col-md-4 and col-sm-4
+                feel free to add rows and experiment with number of items of row
+        -->
+
+        <div class="row">
+            <div class="col-md-4 col-sm-4">
+                <plegma-simple-value itemid="Dummy"></plegma-simple-value>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <h4 class="heading">
+                    Janitza
+                </h4>
+                <table class="table table-bordered table-highlight">
+                    <thead>
+                    <tr>
+                        <th>Phase</th>
+                        <th>Power</th>
+                        <th>CosPhy</th>
+                        <th>Current</th>
+                        <th>Voltage</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>L1</td>
+                        <td><plegma-simple-value itemid="janitza_power_L1"></plegma-simple-value> W</td>
+                        <td><plegma-simple-value itemid="janitza_cosphi_L1"></plegma-simple-value> ind</td>
+                        <td><plegma-simple-value itemid="janitza_current_L1"></plegma-simple-value> A</td>
+                        <td><plegma-simple-value itemid="janitza_voltage_L1"></plegma-simple-value> V</td>
+                    </tr>
+                    <tr>
+                        <td>L2</td>
+                        <td><plegma-simple-value itemid="janitza_power_L2"></plegma-simple-value> W</td>
+                        <td><plegma-simple-value itemid="janitza_cosphi_L2"></plegma-simple-value>  ind</td>
+                        <td><plegma-simple-value itemid="janitza_current_L2"></plegma-simple-value> A</td>
+                        <td><plegma-simple-value itemid="janitza_voltage_L2"></plegma-simple-value> V</td>
+                    </tr>
+                    <tr>
+                        <td>L3</td>
+                        <td><plegma-simple-value itemid="janitza_power_L3"></plegma-simple-value> W</td>
+                        <td><plegma-simple-value itemid="janitza_cosphi_L3"></plegma-simple-value>  cap</td>
+                        <td><plegma-simple-value itemid="janitza_current_L3"></plegma-simple-value> A</td>
+                        <td><plegma-simple-value itemid="janitza_voltage_L3"></plegma-simple-value> V</td>
+                    </tr>
+                    <tr>
+                        <td>Sum L1...L3</td>
+                        <td><plegma-simple-value itemid="janitza_power"></plegma-simple-value> W</td>
+                        <td><plegma-simple-value itemid="janitza_cosphi_total"></plegma-simple-value> ind</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <plegma-single-value itemid="Espace_141_AmbientTemp1"></plegma-single-value>
+            </div>
+        </div>
+
+    </div> <!-- /#content-container -->
+    <!-- <plegma-webview title="Power" url="http://pleg.no-ip.org:81/pleg/power.html"></plegma-webview> -->
+</div>

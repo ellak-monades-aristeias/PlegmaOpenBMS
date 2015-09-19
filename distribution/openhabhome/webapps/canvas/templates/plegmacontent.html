@@ -1,0 +1,67 @@
+<div id="content" ng-controller="subscriptionsController">
+
+    <div id="content-header">
+        <h1>{{title}}</h1> <h1 class="print-date">{{date}}</h1>
+    </div> <!-- #content-header -->
+<!--
+
+    chart : 1,
+    morris : 1,
+    webview : 1,
+    text : 3,
+    image : 1,
+    rrd4j : 1
+
+-->
+    <div id="content-container" ng-controller="rowController">
+<!--
+
+        <plegma-map id="my-map" title="My Fancy Title"
+                    items="Weather_Temp_Max[25.767368,-80.18930]|Weather_Temperature[25.777368,-80.18930]|Weather_Temp_Min[25.767368,-80.18930]">
+        </plegma-map>
+
+-->
+        <div class="row" ng-repeat="row in widgetFragments">
+<!--            <div ng-repeat="widget in row.chart" class="col-md-12 col-sm-12">
+                <plegma-highcharts widget="widget" persistence="psql"></plegma-highcharts>
+            </div>-->
+
+            <div ng-repeat="widget in row.chart" class="col-md-12 col-sm-12">
+                <plegma-highcharts-dynamic widget="widget" persistence="psql"></plegma-highcharts-dynamic>
+            </div>
+            <div ng-repeat="widget in row.gauge" class="col-md-4 col-sm-4">
+                <plegma-gauge widget="widget"></plegma-gauge>
+            </div>
+            <div ng-repeat="widget in row.morris" class="col-md-12 col-sm-12">
+                <plegma-morris widget="widget" persistence="psql"></plegma-morris>
+            </div>
+            <div ng-repeat="widget in row.webview" class="col-md-12 col-sm-12">
+                <plegma-webview widget="widget"></plegma-webview>
+            </div>
+            <div ng-repeat="widget in row.text" class="col-md-4 col-sm-4">
+                <plegma-single-value widget="widget"></plegma-single-value>
+            </div>
+            <div ng-repeat="widget in row.image" class="col-md-12 col-sm-12">
+                <plegma-imageview widget="widget"></plegma-imageview>
+            </div>
+            <div ng-repeat="widget in row.rrd4j" class="col-md-12 col-sm-12">
+                <plegma-rrd4j widget="widget"></plegma-rrd4j>
+            </div>
+            <div ng-repeat="widget in row.piechart" class="col-md-12 col-sm-12">
+                <plegma-piecharts widget="widget"></plegma-piecharts>
+            </div>
+            <div ng-repeat="state in row.state" class="col-md-4 col-sm-4">
+                <div class="portlet">
+                    <div class="portlet-header">
+                        <h3>{{state.label}}</h3>
+                    </div> <!-- /.portlet-header -->
+                    <div class="portlet-content">
+                        <button ui-sref="{{state.id}}" type="button" class="btn btn-lg btn-primary" style="width: 100%">
+                            <i class="{{state.class.join(' ')}}"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

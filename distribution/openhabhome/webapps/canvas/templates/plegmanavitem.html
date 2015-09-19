@@ -1,0 +1,12 @@
+<li ng-controller="dropdownCtrl" ng-class="{active : isActive, dropdown : true}" ng-repeat="child in family.children">
+    <a ng-hide="child.children.length==0" href="javascript:;" ng-click="slideCheck(child)">
+        <i ng-class="{{child.class}}"></i>
+        {{child.label}}
+        <span class="caret"></span>
+    </a>
+    <a ng-hide="child.children.length!=0" ui-sref="{{child.id}}" ng-click="collapseAllCheck()">
+        <i ng-class="{{child.class}}"></i>
+        {{child.label}}
+    </a>
+    <ul class="sub-nav" show-slide="showForm"><tree family="child"></tree></ul>
+</li>
