@@ -158,7 +158,7 @@ function createAuthorizedStates(inputJson)
         home.data.label = inputJson.label;
         document.title = inputJson.label;
 
-        console.log("tree");
+        console.log("tree 1");
         console.log(tree);
         var res = getObjects(tree,"link",{});
         res.sort(function(a, b){
@@ -379,6 +379,9 @@ function getState(link,parent,levelurl,prettyurl,children)
 }
 
 function getObjects(obj, key, parent) {
+
+    //console.log("getObjects key=" + key);
+
     var objects = [];
     for (var i in obj) {
         if (!obj.hasOwnProperty(i)) continue;
@@ -387,7 +390,7 @@ function getObjects(obj, key, parent) {
         } else if (i == key) {
             var arr = (obj.link.split("/"));
             var last = (arr[arr.length-1]);
-
+            console.log("getObjects arr=" + arr);
             if(regex.test(last)){
                 var id = (regex.exec(last))[0];
                 var length = id.length;
@@ -401,10 +404,18 @@ function getObjects(obj, key, parent) {
 
 function getTreeStructure(inputjson)
 {
+    console.log("getTreeStructure called");
+
     var res = getObjects(inputjson,"link",{});
+    console.log("getTreeStructure getObjects returned");
+    console.log(res);
+
     res.sort(function(a, b){
         return a.level - b.level; // ASC -> a - b; DESC -> b - a
     });
+    
+    console.log("after sort");
+    console.log(res);
 
     var level = 0;
     var levels = [];
@@ -416,9 +427,16 @@ function getTreeStructure(inputjson)
             level = res[i].level;
         }
         if(level==res[i].level)
-        {
+        { 
+            console.log("in1buffer for i=" + i +" res="); 
+            console.log(res[i]);
             buffer.push({label : res[i].item.title,link: res[i].item.link, id : res[i].item.id , children : [], icon : res[i].item.icon});
+
         } else {
+
+            console.log("in2buffer for i=" + i +" res="); 
+            console.log(res[i]);
+
             sortWithId(buffer);
             levels.push(buffer);
             buffer = [];
@@ -426,9 +444,14 @@ function getTreeStructure(inputjson)
             level = res[i].level;
         }
     }
+    
     sortWithId(buffer);
     levels.push(buffer);
 
+ 
+    console.log("levels log->");
+    console.log(levels);
+      
     for(var l = levels.length-1 ; l > 0 ; l--)
     {
         for(var l1 = l-1; l1 >= 0; l1 --)
@@ -441,10 +464,16 @@ function getTreeStructure(inputjson)
                 for (var c = 0; c < children.length; c++) {
                     if(children[c].foundfather == true)
                     {
+                         console.log(" children foundfather 1");
+                         console.log(children[c]);
                         continue;
                     }
+
                     if(children[c].id.indexOf(parents[p].id)==0)
                     {
+                         console.log(" children foundfather 0");
+                         console.log(children[c]);
+
                         parents[p].children.push(children[c]);
                         children[c].father = parents[p].id;
                         children[c].foundfather = true;
@@ -453,6 +482,8 @@ function getTreeStructure(inputjson)
             }
         }
     }
+    console.log("getTreeStructure will return");
+    console.log(levels[0]);
     return(levels[0]);
 }
 
