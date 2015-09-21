@@ -1,0 +1,16 @@
+<div class="portlet">
+
+    <div class="portlet-header">
+
+        <h3>
+            <i class="fa fa-bar-chart-o"></i>
+            {{ title }}
+        </h3>
+
+    </div> <!-- /.portlet-header -->
+
+    <div class="portlet-content" ng-controller="fixUrlController">
+        <iframe ng-src='{{ myurl }}' class="chart-holder" height='100%' width='100%' frameborder='0'></iframe> 
+    </div> <!-- /.portlet-content -->
+
+</div>
