@@ -7,6 +7,3 @@
 [submodule "Plegma_openhab"]
 	path = Plegma_openhab
 	url = https://github.com/PlegmaLabs/openhab.git
-[submodule "openhab.wiki"]
-	path = openhab.wiki
-	url = https://github.com/openhab/openhab.wiki.git
