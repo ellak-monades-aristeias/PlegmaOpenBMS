@@ -1,2 +1,0 @@
-ON=urn:upnp-org:serviceId:RenderingControl/SetMute(DesiredMute=1)
-OFF=urn:upnp-org:serviceId:RenderingControl/SetMute(DesiredMute=0)
