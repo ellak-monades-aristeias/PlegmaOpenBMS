@@ -1,9 +1,13 @@
 [submodule "PlegmaOpenBMS.wiki"]
 	path = PlegmaOpenBMS.wiki
 	url = https://github.com/ellak-monades-aristeias/PlegmaOpenBMS.wiki.git
-[submodule "openhab"]
-	path = openhab
-	url = https://github.com/ellak-monades-aristeias/PlegmaOpenBMS.git
+[submodule "openhab.wiki"]
+	path = openhab.wiki
+	url = https://github.com/openhab/openhab.wiki.git
 [submodule "Plegma_openhab"]
 	path = Plegma_openhab
-	url = https://github.com/PlegmaLabs/openhab.git
+	url = https://github.com/plegmalabs/openhab.git
+[submodule "openhab"]
+	path = openhab
+	url = https://github.com/openhab/openhab.git
+	
