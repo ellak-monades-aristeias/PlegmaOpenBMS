@@ -120,6 +120,7 @@ However, if you mount to your mongodb like this
 ![](https://raw.githubusercontent.com/wiki/ellak-monades-aristeias/PlegmaOpenBMS/slamdata2.png)
 
 you can see the Plegma OpenBMS data
+
 http://your-server-ip:20223/slamdata/notebook.html#/sitewhere/tenant-default/
 
 ![](https://raw.githubusercontent.com/wiki/ellak-monades-aristeias/PlegmaOpenBMS/slamdata3.png)
@@ -129,10 +130,12 @@ http://slamdata.com/support/cheatsheet.pdf
 
 	SELECT * FROM "/sitewhere/tenant-default/events" where eventType = 'Measurements' and "measurements.name" = 'Temperature_Setpoint'
 	
+![](https://raw.githubusercontent.com/wiki/ellak-monades-aristeias/PlegmaOpenBMS/slamdata4.png)
+
 and with two clicks you can get a chart.
 http://slamdata.com/documentation/front-end-manual/#visualization
 
-![](https://raw.githubusercontent.com/wiki/ellak-monades-aristeias/PlegmaOpenBMS/slamdata4.png)
+![](https://raw.githubusercontent.com/wiki/ellak-monades-aristeias/PlegmaOpenBMS/slamdata5.png)
 
 which can be embeded in any HTML dashboard among with reports, forms etc. (more details at the front end manual)
 
