@@ -9,6 +9,11 @@ We consider this an important business opportunity which can be addressed with a
 
 Our Building Energy Monitoring System is based on a popular smart-home/IoT integration platform known as [OpenHab](http://openhab.org) which is developed in Java/OSGi technology and is designed to be absolutely vendor-neutral as well as hardware/protocol agnostic. We have developed additional modules (bindings) in order to extent the functionality of OpenHab towards a Building Energy Monitoring System.  [Please visit our Wiki for more details.](https://github.com/ellak-monades-aristeias/PlegmaOpenBMS/wiki)
 
+
+##BigData Analytics open-source cloud backend##
+
+Lets assume you have lots of buidlings to manage, hence lots of PlegmaOpenBMS instances. You obviously need a backend server to collect all sensor data and idealy be able to control all available devices/hardware in realtime. Obviously the solution should be scalable (i.e. big data) as you will soon have millions/billions of sensor data records per day, and ideally it should not require a "new datacenter" for every client, so a multi-tenancy approach is required to save on cloud resources and deployment/maintenance overheads.  **[SiteWhere.org](http://www.sitewhere.org/) is an opensource project that can do exactly that.** Here are our instructions on how to [integrate PlegmaOpenBMS with SiteWhere](sitewhere.md) and also create a quick visual frontend based on [SlamData](http://slamdata.com/)
+
 ## License##
 All source code is under Eclipse Public License (EPL). Wiki and readme files are CC-BY-SA 4.0 
 
