@@ -19,3 +19,19 @@ All source code is under Eclipse Public License (EPL). Wiki and readme files are
 
 ## About##
 Most of the work has been perfomed by [Manolis Nikiforakis](http://linkedin.com/in/mnikiforakis) and [Yiannis Gkoufas](https://gr.linkedin.com/pub/yiannis-gkoufas/18/217/712).
+
+
+##For Developers##
+https://github.com/ellak-monades-aristeias/PlegmaOpenBMS/wiki
+
+##For Users##
+Read the introduction, visit [openhab.org](http://www.openhab.org/) then come back! :-)
+
+##Deliverables##
+ 1. [Plegma user interface](https://github.com/ellak-monades-aristeias/PlegmaOpenBMS/wiki/PlegmaOpenBMS-User-Interface)
+ 2. Binders-modules
+	 a. https://github.com/ellak-monades-aristeias/PlegmaOpenBMS/wiki/sunnywebbox-binding
+	 b. https://github.com/ellak-monades-aristeias/PlegmaOpenBMS/wiki/plugwise-binding
+	 c. https://github.com/ellak-monades-aristeias/PlegmaOpenBMS/wiki/janitza-binding
+ 3. [Cloud based IoT backend](https://github.com/ellak-monades-aristeias/PlegmaOpenBMS/blob/clean/sitewhere.md)
+ 4. [Recommended hardware and instructions](https://github.com/ellak-monades-aristeias/PlegmaOpenBMS/wiki/bbg)
